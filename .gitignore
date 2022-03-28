@@ -1,3 +1,5 @@
 *.o
 .idea/
 main
+*.log
+*.aux
