@@ -3,12 +3,14 @@ Trabajo práctico 1 de Algoritmos y Estructuras de Datos 3. Primer cuatrimestre 
 Facultad de Ciencias Exactas y Naturales de la UBA.
 
 ### Compilación y ejecución:
+
 Escribir los siguiente comandos en el directorio actual:
+
 ```
 make
 ./main
 ```
 
-###Integrantes:
+### Integrantes:
 
 Guillermo José Reyna Maciel, LU 393/20
