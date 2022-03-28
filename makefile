@@ -6,3 +6,6 @@ main:
 
 clean:
 	-rm -rf *.o main
+
+latex:
+	cd ./informe-src/ && sh latex.sh
