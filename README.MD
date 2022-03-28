@@ -13,4 +13,5 @@ make
 
 ### Integrantes:
 
-Guillermo José Reyna Maciel, LU 393/20
+Guillermo José Reyna Maciel, LU 393/20  
+Marco Aurelio Sanchez Sorondo, LU 708/19
