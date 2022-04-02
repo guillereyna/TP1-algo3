@@ -53,7 +53,9 @@ VEp readInput(){
 	
 
 }
-void print_vector(const vector<int >& v){
+
+template<class T>
+void print_vector(const vector<T>& v){
     int n = v.size();
     cout<<"{";
     for (int i = 0; i < n-1; i++)
@@ -63,9 +65,9 @@ void print_vector(const vector<int >& v){
     cout<<v[n-1]<<"}\n";
     
 }
-
-void print_matrix(const vector<vector <int >> & mat){
-    for(vector<int> v : mat){
+template<class T>
+void print_matrix(const vector<vector <T >> & mat){
+    for(vector<T> v : mat){
         print_vector(v);
     }
 }
