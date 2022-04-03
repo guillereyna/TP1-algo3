@@ -13,37 +13,50 @@ vector<int> p;
 vector<int> Q;
 vector<int> K;
 
-void procesar(vector<int> &Q){
+void procesar(){
+
+    // usa Q global
 
 }
 
-void eliminar_amigos(vector<int> &k, int v){
+void eliminar_amigos(int v){
 
+    // usa K y E globales
+
+    vector<int> K_aux;
+
+    for(int e : K){
+
+        if(!E[v-1][e-1]) K_aux.push_back(e);
+
+    }
+
+    K = K_aux;
 }
 
-void chequear_invariante(vector<int> &Q, vector<int> &K){
+void chequear_invariante(){
+
+    // Usa Q y K globales
 
 }
 
 void mas_influyente(vector<int> &K, vector<int> &Q){
 
     if(K.size() == 0){
-
-        procesar(Q);
-
+        procesar();
     }
     else{
 
         int v = K[-1];
         Q.push_back(v);
         K.pop_back();
-        eliminar_amigos(K,v);
-        chequear_invariante(Q,K);
+        eliminar_amigos(v);
+        chequear_invariante();
         mas_influyente(Q,K);
         //restaurar_1(Q,K)
 
         K.pop_back();
-        chequear_invariante(Q,K);
+        chequear_invariante();
         mas_influyente(Q,K);
         //restaruar_2(Q,K)
 
@@ -61,10 +74,16 @@ int main(int argc, char* argv[]){
     //      {1,1,0,0},
     //      {0,0,1,0}};
 
+    VEp sample = readInput(); // llamar con ./backtracking < sample.in
+
+    V = sample.V;
+    E = sample.E;
+    p = sample.p;
+
+    Q = {};
+    K = V; // copy vector
+
     // mas_influyente(K,Q);
-
-    VEp sample = readInput();
-
 
     return 0;
 }
