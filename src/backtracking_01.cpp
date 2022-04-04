@@ -34,10 +34,35 @@ void eliminar_amigos(int v){
     K = K_aux;
 }
 
+bool amigo_de_todos (int e, vector<int> &V) {
+    bool res = true;
+
+    for (int i = 0; i < V.size() && res; ++i) {
+        if (V[i] != e && !E[V[i]-1][e-1]) res = false;
+    }
+
+    return res;
+}
+
 void chequear_invariante(){
-
     // Usa Q y K globales
+    vector<int> K_aux0, K_aux1;
+    
+    for (int e : K) {
+        if (amigo_de_todos(e, Q)) {
+            K_aux0.push_back(e);
+        }
+    }
+    
+    for (int e : K_aux0) {
+        if (amigo_de_todos(e, K_aux0)){ 
+            Q.push_back(e);
+        } else {
+            K_aux1.push_back(e);
+        }
+    }
 
+    K = K_aux1;
 }
 
 void mas_influyente(vector<int> &K, vector<int> &Q){
