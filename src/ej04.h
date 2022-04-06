@@ -8,4 +8,4 @@ struct actividad {
     int s, t;
 };
 
-int actividadesGoloso (vector<actividad> actividades);
+int actividadesGoloso (vector<actividad> &actividades);
