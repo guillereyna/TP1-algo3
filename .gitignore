@@ -5,4 +5,4 @@ main
 *.aux
 .vscode/
 src/ej04
-output-*
+*.output
