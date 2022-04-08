@@ -19,7 +19,7 @@ void procesar(){
 
 }
 
-void eliminar_amigos(int v){
+void eliminar_no_amigos(int v){
 
     // usa K y E globales
 
@@ -27,7 +27,7 @@ void eliminar_amigos(int v){
 
     for(int e : K){
 
-        if(!E[v-1][e-1]) K_aux.push_back(e);
+        if(E[v-1][e-1]) K_aux.push_back(e);
 
     }
 
@@ -75,7 +75,7 @@ void mas_influyente(vector<int> &K, vector<int> &Q){
         int v = K[-1];
         Q.push_back(v);
         K.pop_back();
-        eliminar_amigos(v);
+        eliminar_no_amigos(v);
         chequear_invariante();
         mas_influyente(Q,K);
         //restaurar_1(Q,K)
