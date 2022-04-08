@@ -55,6 +55,9 @@ void mas_influyente(vector<int> &K, vector<int> &Q){
         mas_influyente(Q,K);
         //restaurar_1(Q,K)
 
+        // idea guille: en vez de restaurar, solo hacer copias y reasignarselas a las variables globales
+
+
         K.pop_back();
         chequear_invariante();
         mas_influyente(Q,K);
