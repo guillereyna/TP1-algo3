@@ -16,3 +16,9 @@ ej04: ej04.o
 
 ej04.o: ej04.cpp
 	$(CC) $(CPPFLAGS) -c $< -o $@
+
+.PHONY: clean
+clean:
+	rm -f *.o
+	rm -f ej04
+	rm -f backtracking_01
