@@ -1,75 +1,65 @@
-#include "ej04.h"
+#include <iostream>
+#include <vector>
 
-size_t pos;
+using namespace std;
 
-void print_vector(const vector<actividad>& v){
-    int n = v.size();
-    cout<<"{";
-    for (int i = 0; i < n; i++)
-    {
-        cout << "(" << v[i].s << ", " << v[i].t << ") ";
-    }
-    cout << "}" << endl;
-}
+int cantActividades;
 
-vector<actividad> A; //conjunto de actividades
+struct actividad {
+    int pos, start;
+};
+
+typedef vector<vector<actividad>> Schedule;
+
 vector<int> S; //subconjunto de actividades solucion
 
-void read_input(){
-    int cantActividades;
+Schedule read_input(){
     cin >> cantActividades;
 
+    Schedule A(2*cantActividades);
+
+    int start;
+    int end;
+
     for (int i = 0; i < cantActividades; i++){
+        cin >> start >> end;
         actividad act;
-        cin >> act.s >> act.t;
-        A.push_back(act);
-        // cout << i << ": " << act.s << " " << act.t << endl;
+        act.pos = i; act.start = start;
+        A[end].push_back(act);
     }
+
+    return A;
 }
 
-bool terminaAntes(actividad a, actividad b){
-    return a.t <= b.t;
-}
 
 /* encuentra la actividad que termina lo más temprano posible y no se solapa
    con el último horario ocupado y devuelve su horario de fin, o -1 si no lo 
    encuentra */
-int elegirGoloso(vector<actividad> &actividades, int h){
-    int res = -1;
-    while(pos < actividades.size() && res == -1){
-        if (actividades[pos].s >= h){
-            res = actividades[pos].t;
-            S.push_back(pos);
-            //actividades.erase(actividades.begin(), actividades.begin()+1+pos);
+int elegirGoloso(Schedule &actividades, int h){
+    int i = h;
+    for (; i < 2*cantActividades; i++){
+        i++;
+        for(actividad act : actividades[i]){
+            if (act.start > h){
+                S.push_back(act.pos);
+                return i;
+            }
         }
-        pos++;
     }
-
-    return res;
+    return -1;
 }
 
 /* calcula el beneficio máximo del conjunto de actividades dado que está 
    ocupado hasta el horario h */
-int actividadesGolosoCalcular (vector<actividad> &actividades, int h){
+int actividadesGoloso (Schedule &actividades, int h){
     int electa = elegirGoloso(actividades, h);
-    if (pos > actividades.size() || electa == -1){
-        return 0;
-    } else {
-        return 1 + actividadesGolosoCalcular(actividades, electa);
-    }
-}
-
-/* devuelve el beneficio máximo posible del conjunto de actividades pasado 
-   por parámetro */
-int actividadesGoloso (vector<actividad> &actividades){
-    pos = 0;
-    sort(actividades.begin(), actividades.end(), terminaAntes);
-    return actividadesGolosoCalcular(actividades, 0);
+    if (electa == -1 || electa >= 2*cantActividades) return 0;
+    return 1 + actividadesGoloso(actividades, electa);
 }
 
 int main (){
-    read_input();
-    int beneficio = actividadesGoloso(A);
+    Schedule A = read_input();
+    int beneficio = actividadesGoloso(A, 0);
     cout << beneficio << endl;
     for (size_t i = 0; i < S.size(); i++){
         cout << S[i] << " ";
