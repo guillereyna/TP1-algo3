@@ -28,7 +28,7 @@ VEp readInput(){
 		cin >> trash >> participante >> influencia;
 
 		p[participante-1] = influencia;
-		std::cout<< "participante numero "<< participante << " con influencia "<<influencia<<"\n";
+		//cerr<< "participante numero "<< participante << " con influencia "<<influencia<<"\n";
 		V.push_back(participante);
 	}
 
@@ -37,7 +37,7 @@ VEp readInput(){
 	for(int i = 0 ; i < M ; ++i){
 		cin >> trash >> part1 >> part2;
 
-		cout<< part1 << " amigo de "<<part2<<"\n";
+		//cerr<< part1 << " amigo de "<<part2<<"\n";
 		E[part1-1][part2-1] = true;
 		E[part2-1][part1-1] = true;
 
@@ -57,14 +57,15 @@ VEp readInput(){
 template<class T>
 void print_vector(const vector<T>& v){
     int n = v.size();
-    cout<<"{";
-    for (int i = 0; i < n-1; i++)
+    cerr<<"{";
+    for (int i = 0; i < n; i++)
     {
-        cout<<v[i]<<", ";
+        cerr<<v[i]<<", ";
     }
-    cout<<v[n-1]<<"}\n";
+    cerr << "}\n";
     
 }
+
 template<class T>
 void print_matrix(const vector<vector <T >> & mat){
     for(vector<T> v : mat){

@@ -1,5 +1,5 @@
 CC = g++
-CPPFLAGS = -Wall -Wextra -pedantic -lm -O3
+CPPFLAGS = -g -Wall -Wextra -pedantic -lm -O3
 LDLIBS = -lm
 
 .PHONY: all
