@@ -1,4 +1,5 @@
 #bin/usr/bash
+mkdir -p ../output-cliques-02
 for i in *.clq
     do
         echo "Procesando $i"

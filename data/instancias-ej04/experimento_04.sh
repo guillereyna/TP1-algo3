@@ -1,4 +1,5 @@
 #bin/usr/bash
+mkdir -p ../output-ej04
 for i in interval_instance_*
     do
         echo "Procesando $i"

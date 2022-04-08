@@ -1,4 +1,5 @@
 #bin/usr/bash
+mkdir -p ../output-ej03
 for i in instancia_*
     do
         echo "Procesando $i"
