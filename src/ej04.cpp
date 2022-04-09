@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 
+
 using namespace std;
 
 int cantActividades;
@@ -64,6 +65,8 @@ int actividadesGoloso (const Schedule &actividades, int h){
 }
 
 int main (){
+    ios::sync_with_stdio(false);
+    cin.tie(0);
     Schedule A = read_input();
     int beneficio = actividadesGoloso(A, -1);
     cout << beneficio << endl;
