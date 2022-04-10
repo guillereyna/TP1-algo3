@@ -3,7 +3,7 @@ CPPFLAGS = -g -Wall -Wextra -pedantic -lm -O3
 LDLIBS = -lm
 
 .PHONY: all
-all: backtracking_01 ej04
+all: backtracking_01 ej04 ej03_td
 
 backtracking_01: backtracking_01.o
 	$(CC) $(CPPFLAGS) $^ -o $@ $(LDLIBS)
@@ -17,8 +17,15 @@ ej04: ej04.o
 ej04.o: ej04.cpp
 	$(CC) $(CPPFLAGS) -c $< -o $@
 
+ej03_td: ej03_td.o
+	$(CC) $(CPPFLAGS) $^ -o $@ $(LDLIBS)
+
+ej03_td.o: ej03_td.cpp
+	$(CC) $(CPPFLAGS) -c $< -o $@
+
 .PHONY: clean
 clean:
 	rm -f *.o
 	rm -f ej04
 	rm -f backtracking_01
+	rm -f ej03_td
