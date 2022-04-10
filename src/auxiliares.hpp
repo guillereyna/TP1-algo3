@@ -72,3 +72,51 @@ void print_matrix(const vector<vector <T >> & mat){
         print_vector(v);
     }
 }
+
+void ordenar_influencia_creciente(VEp &G){
+
+	int min;
+	int min_idx;
+	int aux;
+
+	for(int i = 0; i < G.p.size(); i++){
+
+		min = G.p[i];
+		min_idx = i;
+
+		for(int j = i+1; j < G.p.size(); j++){
+
+			if(min > G.p[j]){
+				min = G.p[j];
+				min_idx = j;
+			}
+		}
+
+		aux = G.p[i];
+		G.p[i] = G.p[min_idx];
+		G.p[min_idx] = aux;
+
+		aux = G.V[i];
+		G.V[i] = G.V[min_idx];
+		G.V[min_idx] = aux;
+
+	}
+}
+
+void invertir_orden(VEp &G){
+
+	int aux;
+
+	for(int i = 0; i < (G.p.size()/2); i++){
+
+		aux = G.p[i];
+		G.p[i] = G.p[G.p.size()-i-1];
+		G.p[G.p.size()-i-1] = aux;
+
+		aux = G.V[i];
+		G.V[i] = G.V[G.p.size()-i-1];
+		G.V[G.p.size()-i-1] = aux;
+
+	}
+
+}
