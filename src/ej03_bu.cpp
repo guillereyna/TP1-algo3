@@ -42,8 +42,10 @@ void BTsolution()
 }
 int main()
 {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+
     int x, y, b;
-    tarea entrada;
     cin >> cantTareas;
     dp.resize((2*cantTareas)+2, 0);
     tareas.resize((2*cantTareas)+2, vector< tarea >());
