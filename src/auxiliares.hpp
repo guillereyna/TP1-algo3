@@ -54,6 +54,8 @@ VEp readInput(){
 
 }
 
+
+
 template<class T>
 void print_vector(const vector<T>& v){
     int n = v.size();
@@ -71,4 +73,15 @@ void print_matrix(const vector<vector <T >> & mat){
     for(vector<T> v : mat){
         print_vector(v);
     }
+}
+
+int sumaVec(const vector<int>&v){
+
+	int res = 0;
+	for (size_t i = 0; i < v.size(); i++)
+	{
+		res+=v[i];
+	}
+	
+	return res;
 }
