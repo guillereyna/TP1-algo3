@@ -23,6 +23,21 @@ int B(int i)
     return memo[i];
 }
 
+void solution()
+{
+    int i = 0;
+    while(i < n)
+    {
+        if(memo[i] > memo[i+1])
+        {
+            cout << i << " ";
+            i = p[tareas[i].t+1];
+        }
+        else i++;
+    }
+    cout << endl;
+}
+
 int main()
 {
     ios::sync_with_stdio(false);
@@ -55,6 +70,7 @@ int main()
     }
 
     cout << B(0) << endl;
+    solution();
     /* for (int i = 0; i < n + 1; i++)
     {
         cout << memo[i] << " ";
