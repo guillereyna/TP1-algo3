@@ -5,36 +5,32 @@ using namespace std;
 
 struct tarea
 {
-    int t, b, index;
+    int s, t, b;
 };
-vector<int> dp;
-vector < vector<tarea> >tareas;
-int cantTareas;
-vector<int> padres;
-vector<int>auxiliar;
 
-void BTsolution()
+vector<tarea> tareas;
+vector<int> p;
+vector<int> memo;
+int n;
+
+int B(int i)
 {
-    for(int i = 2*cantTareas; i >= 0; i--)
+    for (int j = n-1; j >= i; j--)
     {
-        dp[i] = dp[i+1];
-        for(auto j:tareas[i])
-        {
-            if(dp[i] < dp[j.t+1]+j.b)
-            {
-                dp[i] = dp[j.t+1]+j.b;
-                padres[i] = j.index;
-            }
-        }
+        memo[j] = max(memo[j+1], tareas[j].b + memo[p[tareas[j].t + 1]]);
     }
-    cout << dp[0] << endl;
+
+    return memo[i];
+}
+void solution()
+{
     int i = 0;
-    while(i < (2*cantTareas)+1)
+    while(i < n)
     {
-        if(dp[i] > dp[i+1])
+        if(memo[i] > memo[i+1])
         {
-            cout << padres[i] << " ";
-            i = auxiliar[padres[i]] + 1;
+            cout << i << " ";
+            i = p[tareas[i].t+1];
         }
         else i++;
     }
@@ -46,16 +42,38 @@ int main()
     cin.tie(0);
 
     int x, y, b;
-    cin >> cantTareas;
-    dp.resize((2*cantTareas)+2, 0);
-    tareas.resize((2*cantTareas)+2, vector< tarea >());
-    padres.resize((2*cantTareas)+2, -1);
-    for(int i = 0; i < cantTareas; i++)
+    cin >> n;
+
+    for (int i = 0; i < n; i++)
     {
         cin >> x >> y >> b;
-        auxiliar.push_back(y);
-        tareas[x].push_back({y, b, i});
+        tareas.push_back({x, y, b});
     }
-    BTsolution();
+
+    p.resize((2 * n) + 2, -1);
+    memo.resize(n + 1, -1);
+
+    for (int i = 0; i < n; i++)
+    {
+        if (p[tareas[i].s] == -1)
+            p[tareas[i].s] = i;
+    }
+
+    memo[n] = 0;
+
+    p[(2 * n) + 1] = n;
+
+    for (int i = (2 * n) + 1; i >= 0; i--)
+    {
+        if (p[i] == -1)
+            p[i] = p[i + 1];
+    }
+
+    cout << B(0) << endl;
+    solution();
+    /* for (int i = 0; i < n + 1; i++)
+    {
+        cout << memo[i] << " ";
+    } */
     return 0;
 }

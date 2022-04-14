@@ -3,48 +3,38 @@
 
 using namespace std;
 
-
 struct tarea
 {
-    int t, b, index;
+    int s, t, b;
 };
-vector<int> dp;
-vector < vector<tarea> >tareas;
-int cantTareas;
-vector<int> padres;
-vector<int>auxiliar;
 
-int DP(int i)
+vector<tarea> tareas;
+vector<int> p;
+vector<int> memo;
+int n;
+
+int B(int i)
 {
-    if(i > 2*cantTareas) return 0;
-    if(dp[i] != -1) return dp[i];
-    dp[i] = DP(i+1);
-    for(auto j:tareas[i])
-    {
-        if(dp[i] < (DP(j.t+1) + j.b))
-        {
-            dp[i] = DP(j.t+1) + j.b;
-            padres[i] = j.index;
-        }
-    }
-    return dp[i];
+    if (memo[i] != -1)
+        return memo[i];
+    if (i == n)
+        return 0;
+    memo[i] = max(B(i + 1), B(p[tareas[i].t + 1]) + tareas[i].b);
+    return memo[i];
 }
 
 void solution()
 {
-    vector<int>sol;
     int i = 0;
-    while(i < (2*cantTareas)+1)
+    while(i < n)
     {
-        if(DP(i) > DP(i+1))
+        if(memo[i] > memo[i+1])
         {
-            sol.push_back(padres[i]);
-            i = auxiliar[padres[i]] + 1;
+            cout << i << " ";
+            i = p[tareas[i].t+1];
         }
         else i++;
     }
-    for(auto x:sol)
-        cout << x << " ";
     cout << endl;
 }
 
@@ -54,17 +44,36 @@ int main()
     cin.tie(0);
 
     int x, y, b;
-    cin >> cantTareas;
-    dp.resize((2*cantTareas)+2, -1); ///O(n)
-    tareas.resize((2*cantTareas)+1, vector< tarea >());///O(n)
-    padres.resize((2*cantTareas)+1, -1);///O(n)
-    for(int i = 0; i < cantTareas; i++)///O(n)
+    cin >> n;
+
+    for (int i = 0; i < n; i++)
     {
         cin >> x >> y >> b;
-        tareas[x].push_back({y, b, i});
-        auxiliar.push_back(y);
+        tareas.push_back({x, y, b});
     }
-    cout << DP(0) << endl;
+
+    p.resize((2 * n) + 2, -1);
+    memo.resize(n + 1, -1);
+
+    for (int i = 0; i < n; i++)
+    {
+        if (p[tareas[i].s] == -1)
+            p[tareas[i].s] = i;
+    }
+
+    p[(2 * n) + 1] = n;
+
+    for (int i = (2 * n) + 1; i >= 0; i--)
+    {
+        if (p[i] == -1)
+            p[i] = p[i + 1];
+    }
+
+    cout << B(0) << endl;
     solution();
+    /* for (int i = 0; i < n + 1; i++)
+    {
+        cout << memo[i] << " ";
+    } */
     return 0;
 }
