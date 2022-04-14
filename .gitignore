@@ -8,3 +8,8 @@ src/ej04
 *.output
 src/ej03_bu
 src/ej03_td
+informe.fls
+informe.fdb_latexmk
+informe.synctex.gz
+informe.toc
+informe-src/informe.pdf
