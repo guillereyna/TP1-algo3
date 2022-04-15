@@ -89,7 +89,7 @@ void mas_influyente(vector<int> &Q, vector<int> &K){
     else{
 
         // poda
-        if(sumaVec(Q)+sumaVec(K)<max_sum) return;
+        //if(sumaVec(Q)+sumaVec(K)<max_sum) return;
 
 
         vector<int> K_aux = K;      // O(n)
@@ -131,6 +131,8 @@ int main(int argc, char* argv[]){
     
     VEp sample = readInput(); // llamar con ./backtracking < sample.in
 
+    ordenar_influencia_creciente(sample);
+
     V = sample.V;
     E = sample.E;
     p = sample.p;
@@ -151,4 +153,5 @@ int main(int argc, char* argv[]){
     cout << endl;
 
     return 0;
+
 }

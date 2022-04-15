@@ -81,22 +81,24 @@ void ordenar_influencia_creciente(VEp &G){
 	int min_idx;
 	int aux;
 
-	for(int i = 0; i < G.p.size(); i++){
+	vector<int> p_copy = G.p;
 
-		min = G.p[i];
+	for(int i = 0; i < p_copy.size(); i++){
+
+		min = p_copy[i];
 		min_idx = i;
 
-		for(int j = i+1; j < G.p.size(); j++){
+		for(int j = i+1; j < p_copy.size(); j++){
 
-			if(min > G.p[j]){
-				min = G.p[j];
+			if(min > p_copy[j]){
+				min = p_copy[j];
 				min_idx = j;
 			}
 		}
 
-		aux = G.p[i];
-		G.p[i] = G.p[min_idx];
-		G.p[min_idx] = aux;
+		aux = p_copy[i];
+		p_copy[i] = p_copy[min_idx];
+		p_copy[min_idx] = aux;
 
 		aux = G.V[i];
 		G.V[i] = G.V[min_idx];
@@ -109,11 +111,7 @@ void invertir_orden(VEp &G){
 
 	int aux;
 
-	for(int i = 0; i < (G.p.size()/2); i++){
-
-		aux = G.p[i];
-		G.p[i] = G.p[G.p.size()-i-1];
-		G.p[G.p.size()-i-1] = aux;
+	for(int i = 0; i < (G.V.size()/2); i++){
 
 		aux = G.V[i];
 		G.V[i] = G.V[G.p.size()-i-1];
