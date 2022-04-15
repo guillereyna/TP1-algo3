@@ -2,7 +2,7 @@
 \usepackage[paper=a4paper, left=1.5cm, right=1.5cm, bottom=1.5cm, top=3.5cm]{geometry}
 \usepackage[spanish]{babel}
 \usepackage[utf8]{inputenc}
-\usepackage{imakeidx}
+\usepackage{imakeidx, multirow, amsfonts, amsmath}
 \usepackage{caratula}
 
 \begin{document}
@@ -12,10 +12,10 @@
 
 % CAMBIAR INTEGRANTES
 \integrante{Casado Farall, Joaquin}{072/20}{joakinfarall@gmail.com}
-\integrante{Vitali, Lucas}{XXX/XX}{}
-\integrante{Reyna Maciel, Guillermo José}{393/20}{guille.j.reyna@gmail.com}
 \integrante{Chumacero, Carlos Nehemias}{492/20}{--}
-\integrante{Marco}{}{--}
+\integrante{Reyna Maciel, Guillermo José}{393/20}{guille.j.reyna@gmail.com}
+\integrante{Sánchez Sorondo, Marco}{}{--}
+\integrante{Vitali, Lucas}{XXX/XX}{}
 
 \maketitle
 
@@ -41,12 +41,108 @@ Lo mismo acá
 
 \addcontentsline{toc}{section}{Problema 2: Selección de actividades}
 \section*{Problema 2: Selección de actividades}
-Descripción del problema de selección de actividades
+Dado un conjunto de actividades $A = \{A_0, ... , A_{n-1}\}$ y una función de beneficio $b: A \rightarrow \mathbb{N}$, el problema de selección de actividades consiste en encontrar un subconjunto de actividades $S$ cuyo beneficio $b(S) = \sum_{A \in S} b(A)$ sea máximo de entre todos aquellos subconjuntos de actividades que no se solapan en el tiempo. Cada actividad $A_i$ se realiza en algún intervalo de tiempo $[ s_i , t_i ]$, siendo $s_i \in \mathbb{N}$ su momento inicial y $t_i$ su momento final. Suponemos que $0 \leq s_i < t_i \leq 2n$ para todo $0 \leq i < n$.
+
+A los subconjuntos $S$ de actividades que no se solapan en el tiempo los llamamos compatibles.
 
 \section{Programación dinámica}
-Solución y demostración
+
+\subsection{}
+\emph{Describir cómo se puede resolver el problema de selección de actividades utilizando cualquier solución al problema de la clique más influyente.} \\
+
+El problema de la clique más influyente se puede modelar con un grafo cuyos nodos representan los \emph{actores}, cuyo peso es su \emph{influencia}, y cuyas aristas representan las \emph{relaciones de amistad} con otros actores.
+
+El problema de la clique más influyente se abstrae entonces a encontrar el subgrafo tal que todos los nodos del subgrafo están relacionados por aristas a todos los otros nodos del subgrafo (i.e. todos los actores son amigos entre sí: una clique) y cuya sumatoria de pesos sea máxima entre todos los grafos que cumplen la anterior condición (i.e. la clique con mayor influencia).
+
+Para describir cómo el problema de selección de actividades es equivalente al problema de cliques, basta con modelarlo como un problema en un grafo con la misma solución.
+
+Proponemos representar a cada actividad como un nodo en un grafo, cuyo peso representa su beneficio y que está conectado por aristas a todas las otras actividades con las que es compatible. Por lo tanto, cualquier subconjunto de actividades compatibles va a ser representado en el grafo como un subgrafo de nodos que están conectados por aristas con todos los otros nodos en el subgrafo. Encontrar el subconjunto de actividades compatibles con mayor beneficio es entonces equivalente a encontrar al subgrafo completo de peso máximo.
+
+Si tenemos una solución para el problema de la clique más influyente, tenemos una soluución para el problema de encontrar el subgrafo con mayor peso de un grafo, y por lo tanto la solución al problema de selección de actividades.
+
+\subsection{}
+\emph{Supongamos que $A$ está ordenado por orden de comienzo de la actividad, i.e., $s_i \leq s_{i+1}$ para todo $1 \leq i < n$. Escribir una función recursiva $b : {0, . . . , n} \rightarrow \mathbb{N}$ tal que:
+\begin{itemize}
+    \item $b(i)$ denota el máximo beneficio entre todos los subconjuntos de actividades compatibles incluidos en $A_i , ... , A_{n-1}$ (Notar que $b(n) = 0$ por definición.)
+    \item $b$ satisface la propiedad de superposición de subproblemas.
+\end{itemize}}
+
+$$b(i) = \begin{cases}
+    0 & i = n \\
+    max\{b(i+1), b(p_i) + b_i\} & \text{en otro caso}
+\end{cases}$$
+
+Donde $p_i$ es el índice de la primera actividad compatible con la actividad de índice i, con $p_i > i$. \\
+
+En cada llamado recursivo, se consideran ambos el caso en que no se selecciona una actividad y el caso en el que se selecciona la actividad, para una cantidad de llamados recursivos en el órden de $2^n$. Considerando que $0 \leq i \leq n$, sabemos que hay $n+1$ valores posibles de $b$, satisfaciendo la propiedad de superposición de problemas.
 
 \section{Algoritmo goloso}
-Etcéteras
+
+Considerar la siguiente estrategia golosa para resolver el problema de selección de actividades compatibles para el caso en que $b(A) = 1$ para toda actividad $A \in A$: elegir la actividad cuyo momento final sea lo más temprano posible, de entre todas las actividades que no se solapen con las actividades ya elegidas.
+
+\subsection{}
+Demostración
+
+\subsection{}
+\emph{Mostrar que la solución no es correcta cuando $b(A)$ no es necesariamente 1 para todo A.} \\
+
+Como contraejemplo, considerar el siguiente conjunto $A$ de actividades: \\
+
+\begin{tabular}{l c c}
+i & $[s_i$ - $t_i]$ & $b_i$ \\
+\hline
+0: & 1 - 2 & 1 \\
+1: & 1 - 8 & 500 \\
+2: & 3 - 4 & 1 \\
+3: & 5 - 6 & 1
+\end{tabular} \\
+
+El algoritmo goloso devuelve 3 como óptimo, eligiendo las actividades $A_0$, $A_2$, y $A_3$. La selección óptima es $A_1$, con beneficio 500.
+
+\clearpage
+
+\section*{Apéndice - Experimentos}
+Descripción de condiciones de experimentación
+
+\subsection{Backtracking}
+
+\begin{center}
+\begin{tabular}{ c c c } 
+Instancia & Óptimo & Tiempo (seg.) \\
+\hline
+instancia\_1 & 100 & 0.06
+\end{tabular}
+\end{center}
+
+
+\subsection{Podas}
+
+\begin{center}
+\begin{tabular}{ c c c } 
+Instancia & Óptimo & Tiempo (seg.) \\
+\hline
+instancia\_1 & 100 & 0.06
+\end{tabular}
+\end{center}
+
+\subsection{Programación dinámica}
+
+\begin{center}
+\begin{tabular}{ c c c } 
+Instancia & Óptimo & Tiempo (seg.) \\
+\hline
+instancia\_1 & 100 & 0.06
+\end{tabular}
+\end{center}
+
+\subsection{Algoritmo goloso}
+
+\begin{center}
+\begin{tabular}{ c c c } 
+Instancia & Óptimo & Tiempo (seg.) \\
+\hline
+instancia\_1 & 100 & 0.06
+\end{tabular}
+\end{center}
 
 \end{document}
