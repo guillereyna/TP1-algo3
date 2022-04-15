@@ -88,6 +88,10 @@ void mas_influyente(vector<int> &Q, vector<int> &K){
     }
     else{
 
+        // poda
+        if(sumaVec(Q)+sumaVec(K)<max_sum) return;
+
+
         vector<int> K_aux = K;      // O(n)
         vector<int> Q_aux = Q;      // O(n)
 
@@ -122,7 +126,9 @@ int main(int argc, char* argv[]){
     //      {1,0,1,1},
     //      {1,1,0,0},
     //      {0,0,1,0}};
-
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(0);
+    
     VEp sample = readInput(); // llamar con ./backtracking < sample.in
 
     V = sample.V;

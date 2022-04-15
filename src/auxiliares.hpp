@@ -54,6 +54,8 @@ VEp readInput(){
 
 }
 
+
+
 template<class T>
 void print_vector(const vector<T>& v){
     int n = v.size();
@@ -119,4 +121,14 @@ void invertir_orden(VEp &G){
 
 	}
 
+}
+int sumaVec(const vector<int>&v){
+
+	int res = 0;
+	for (size_t i = 0; i < v.size(); i++)
+	{
+		res+=v[i];
+	}
+	
+	return res;
 }
