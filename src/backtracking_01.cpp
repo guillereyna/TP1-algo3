@@ -137,7 +137,8 @@ int main(int argc, char* argv[]){
     
     VEp sample = readInput(); // llamar con ./backtracking < sample.in
 
-    ordenar_influencia_creciente(sample);
+    ordenar_influencia_decreciente(sample);
+    //invertir_orden(sample);
 
     V = sample.V;
     E = sample.E;
@@ -145,6 +146,8 @@ int main(int argc, char* argv[]){
 
     Q = {};
     K = V; // copy vector
+
+    cerr << "Llamo mas influyente" << endl;
 
     mas_influyente(Q,K);
 

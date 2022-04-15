@@ -75,7 +75,10 @@ void print_matrix(const vector<vector <T >> & mat){
     }
 }
 
-void ordenar_influencia_creciente(VEp &G){
+void ordenar_influencia_decreciente(VEp &G){
+
+	// como se hace k.pop_back
+	// se ordena V en orden creciente por influencia
 
 	int min;
 	int min_idx;
