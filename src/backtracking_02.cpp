@@ -87,39 +87,7 @@ int sumaInflVec(const vector<int> & v){
     }
     return res;
 }
-void mas_influyente(vector<int> &Q, vector<int> &K){
 
-    if(K.size() == 0){
-        procesar();                 // O(n) -> imprimo Q
-    }
-    else{
-
-        //if(sumaInflVec(Q)+sumaInflVec(K)<max_sum) return;
-        //if(poderInfluenciaTotal(greedyMinPartitionK(K, p)) + sumaInflVec(Q) <= max_sum) return;
-        vector<int> K_aux = K;      // O(n)
-        vector<int> Q_aux = Q;      // O(n)
-
-        int v = K[K.size()-1];      // O(1)
-        Q.push_back(v);             // O(1)
-        K.pop_back();               // O(1)
-        eliminar_no_amigos(v);      // O(n) -> saco los no amigos de K
-        chequear_invariante();      // O(n²) -> chequeo en K amigos de Q
-        mas_influyente(Q,K);        // llamado recursivo
-        //restaurar_1(Q,K)
-        K = K_aux;                  // O(n)
-        Q = Q_aux;                  // O(n)
-        
-
-        K.pop_back();               // O(1)
-        chequear_invariante();      // O(n²)
-        mas_influyente(Q,K);        // llamdo recursivo
-        //restaruar_2(Q,K)
-        K = K_aux;                  // O(n)
-        Q = Q_aux;                  // O(n)
-
-    }
-
-}
 bool amigo_de_nadie_en_I(int e, const vector<int>& I){
 
 
@@ -174,6 +142,44 @@ vector<vector<int > > greedyMinPartitionK(vector<int>& K, const vector<int>& p){
 
 	return Indeps;
 }
+
+
+void mas_influyente(vector<int> &Q, vector<int> &K){
+
+    if(K.size() == 0){
+        procesar();                 // O(n) -> imprimo Q
+    }
+    else{
+
+        if(sumaInflVec(Q)+sumaInflVec(K)<max_sum) return;
+        if((poderInfluenciaTotal(greedyMinPartitionK(K, p)) + sumaInflVec(Q)) <= max_sum){
+            return;
+        }
+        vector<int> K_aux = K;      // O(n)
+        vector<int> Q_aux = Q;      // O(n)
+
+        int v = K[K.size()-1];      // O(1)
+        Q.push_back(v);             // O(1)
+        K.pop_back();               // O(1)
+        eliminar_no_amigos(v);      // O(n) -> saco los no amigos de K
+        chequear_invariante();      // O(n²) -> chequeo en K amigos de Q
+        mas_influyente(Q,K);        // llamado recursivo
+        //restaurar_1(Q,K)
+        K = K_aux;                  // O(n)
+        Q = Q_aux;                  // O(n)
+        
+
+        K.pop_back();               // O(1)
+        chequear_invariante();      // O(n²)
+        mas_influyente(Q,K);        // llamdo recursivo
+        //restaruar_2(Q,K)
+        K = K_aux;                  // O(n)
+        Q = Q_aux;                  // O(n)
+
+    }
+
+}
+
 int main(int argc, char* argv[]){
 
     // Q = {};
