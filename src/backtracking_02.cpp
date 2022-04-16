@@ -80,7 +80,13 @@ void chequear_invariante(){
 
     K = K_aux1;
 }
-
+int sumaInflVec(const vector<int> & v){
+    int res = 0;
+    for(int e : v){
+        res += p[e-1];
+    }
+    return res;
+}
 void mas_influyente(vector<int> &Q, vector<int> &K){
 
     if(K.size() == 0){
@@ -88,6 +94,8 @@ void mas_influyente(vector<int> &Q, vector<int> &K){
     }
     else{
 
+        //if(sumaInflVec(Q)+sumaInflVec(K)<max_sum) return;
+        //if(poderInfluenciaTotal(greedyMinPartitionK(K, p)) + sumaInflVec(Q) <= max_sum) return;
         vector<int> K_aux = K;      // O(n)
         vector<int> Q_aux = Q;      // O(n)
 
@@ -145,7 +153,6 @@ void sortByInfluence(vector<int >& K){
 }
 vector<vector<int > > greedyMinPartitionK(vector<int>& K, const vector<int>& p){
 	sortByInfluence(K);
-    print_vector(K);
 	vector<vector<int > >Indeps;
 	for(int e : K){
 		bool pushed = false;
@@ -164,7 +171,7 @@ vector<vector<int > > greedyMinPartitionK(vector<int>& K, const vector<int>& p){
         
 		}
 	}
-    print_matrix(Indeps);
+
 	return Indeps;
 }
 int main(int argc, char* argv[]){
@@ -187,7 +194,7 @@ int main(int argc, char* argv[]){
     K = V; // copy vector
 
 
-    vector<vector<int>> part = greedyMinPartitionK(K,p);
+    //vector<vector<int>> part = greedyMinPartitionK(K,p);
     mas_influyente(Q,K);
 
     cout << max_sum << endl;
