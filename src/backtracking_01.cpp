@@ -89,27 +89,40 @@ void mas_influyente(vector<int> &Q, vector<int> &K){
     else{
 
         // poda
-        if(sumaVec(Q)+sumaVec(K)<max_sum) return;
+        int cota_influencia = 0;
 
+        for(int e : Q){                 // O(n)
+            cota_influencia += p[e-1];
+        }
+        for(int e : K){                 //O(n)
+            cota_influencia += p[e-1];
+        }
+
+        if(cota_influencia < max_sum) return;   //O(1)
+
+        // backtraking
 
         vector<int> K_aux = K;      // O(n)
         vector<int> Q_aux = Q;      // O(n)
 
+        // se toma elemento de K
         int v = K[K.size()-1];      // O(1)
         Q.push_back(v);             // O(1)
         K.pop_back();               // O(1)
         eliminar_no_amigos(v);      // O(n) -> saco los no amigos de K
         chequear_invariante();      // O(n²) -> chequeo en K amigos de Q
         mas_influyente(Q,K);        // llamado recursivo
-        //restaurar_1(Q,K)
+        
+        //restaurar
         K = K_aux;                  // O(n)
         Q = Q_aux;                  // O(n)
         
-
+        // no se toma elemento de K
         K.pop_back();               // O(1)
         chequear_invariante();      // O(n²)
         mas_influyente(Q,K);        // llamdo recursivo
-        //restaruar_2(Q,K)
+        
+        //restaruar
         K = K_aux;                  // O(n)
         Q = Q_aux;                  // O(n)
 
@@ -119,17 +132,13 @@ void mas_influyente(vector<int> &Q, vector<int> &K){
 
 int main(int argc, char* argv[]){
 
-    // Q = {};
-    // K = {1,2,3,4};
-    // p = {1,4,3,8};
-    // E = {{0,1,1,0},
-    //      {1,0,1,1},
-    //      {1,1,0,0},
-    //      {0,0,1,0}};
     std::ios::sync_with_stdio(false);
     std::cin.tie(0);
     
     VEp sample = readInput(); // llamar con ./backtracking < sample.in
+
+    ordenar_influencia_decreciente(sample);
+    //invertir_orden(sample);
 
     V = sample.V;
     E = sample.E;
@@ -137,6 +146,8 @@ int main(int argc, char* argv[]){
 
     Q = {};
     K = V; // copy vector
+
+    cerr << "Llamo mas influyente" << endl;
 
     mas_influyente(Q,K);
 
@@ -151,4 +162,5 @@ int main(int argc, char* argv[]){
     cout << endl;
 
     return 0;
+
 }

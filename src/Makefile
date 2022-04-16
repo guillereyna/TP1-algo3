@@ -37,3 +37,4 @@ clean:
 	rm -f ej04
 	rm -f backtracking_01
 	rm -f ej03_td
+	rm -f ej03_bu
