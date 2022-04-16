@@ -80,19 +80,23 @@ void chequear_invariante(){
 
     K = K_aux1;
 }
+
 int sumaInflVec(const vector<int> & v){
+    
     int res = 0;
+    
     for(int e : v){
         res += p[e-1];
     }
+    
     return res;
 }
 
 bool amigo_de_nadie_en_I(int e, const vector<int>& I){
 
-
 	bool res = true;
 	int i = 0;
+
 	while(i < I.size() && res){
 
 		res &= !(E[e-1][I[i]-1]);
@@ -102,33 +106,45 @@ bool amigo_de_nadie_en_I(int e, const vector<int>& I){
 
 	return res;
 }
+
 int poderInfluenciaTotal(const vector<vector<int > > & particion){
+    
     int pSum = 0;
+    
     for(int i = 0 ; i < particion.size() ; ++i){
+    
         pSum+=p[particion[i][0]-1];
+    
     }
 
     return pSum;
-
-
-
 }
+
 bool order(int a, int b){
 	return p[a-1]>p[b-1];
 }
+
 void sortByInfluence(vector<int >& K){
 	sort(K.begin(),K.end(),order);
 }
-vector<vector<int > > greedyMinPartitionK(vector<int>& K, const vector<int>& p){
-	sortByInfluence(K);
+
+vector<vector<int > > greedyMinPartitionK(vector<int>& K, 
+                                          const vector<int>& p){
+	
+    sortByInfluence(K);
 	vector<vector<int > >Indeps;
-	for(int e : K){
-		bool pushed = false;
-		for(int i = 0 ; i < Indeps.size(); ++i){ // obs: no agrega complejidad
-			if(amigo_de_nadie_en_I(e,Indeps[i])) {
-				Indeps[i].push_back(e);
+	
+    for(int e : K){
+		
+        bool pushed = false;
+		
+        for(int i = 0 ; i < Indeps.size(); ++i){ // obs: no agrega complejidad
+			
+            if(amigo_de_nadie_en_I(e,Indeps[i])) {
+				
+                Indeps[i].push_back(e);
 				pushed = true;
-				break;
+                break;
 			}
 			
 		}
@@ -136,13 +152,11 @@ vector<vector<int > > greedyMinPartitionK(vector<int>& K, const vector<int>& p){
 		if(!pushed){
 			vector<int> Inew = {e};
 			Indeps.push_back(Inew);
-        
 		}
 	}
 
 	return Indeps;
 }
-
 
 void mas_influyente(vector<int> &Q, vector<int> &K){
 
@@ -151,10 +165,13 @@ void mas_influyente(vector<int> &Q, vector<int> &K){
     }
     else{
 
-        if(sumaInflVec(Q)+sumaInflVec(K)<max_sum) return;
-        if((poderInfluenciaTotal(greedyMinPartitionK(K, p)) + sumaInflVec(Q)) <= max_sum){
+        if(sumaInflVec(Q)+sumaInflVec(K) < max_sum) return;
+
+        if((poderInfluenciaTotal(greedyMinPartitionK(K, p)) + 
+            sumaInflVec(Q)) <= max_sum){
             return;
         }
+
         vector<int> K_aux = K;      // O(n)
         vector<int> Q_aux = Q;      // O(n)
 
