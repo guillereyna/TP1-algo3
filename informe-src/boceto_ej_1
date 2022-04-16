@@ -1,0 +1,51 @@
+1.1
+
+Nuestro algoritmo de backtraking para resolver este problema recibe como parametros dos conjuntos, Q y K, representados como vectores.
+Tomamos como caso base a las instacia de (Q,K) tal que K este vacio. En este caso no hay elemento en K sobre los cuales decidir si incluir en la clique Q. Luego se procesa Q, es decir, se calcula su influencia con la mayor influencia anteriormente vista (variable global) y de ser mayor se almacena la influencia de Q y a Q en una variable global.
+
+En el caso recursivo, sea v el ultimo elemento de K, se llama recursivamente a nuestro algoritmo para las instacias en donde se agrega v a Q y no se agrega v a Q, siempre sacando a v de K. En ambos casos, luego de sacar a v de K y agregar o no v a Q, se chequean ambos invariantne de K, es decir: 
+1 - en K no haya elementos que no sea amigos de todos en Q 
+2 - en K no haya elementos que sea amigos de todos en K. 
+
+En el primer caso si se agrego a v, se puede asumir que K cumplia el invariante, por lo que cumplia (1) antes de agregar a v, por lo que solamente hace falta eliminar a los elementos en K que no son amigos de v, lo cual se hace en O(|K|) < O(n). Si no se agrega a v a Q este invariante no hace falta chequear por que ya se cumplia.
+
+En el segundo caso, por cada elemento en K tenemos que ver su relacion con los demas elementos en K, y eliminarlo de K y agregarlo a Q en caso de que sea amigos de todos en K. Como eliminar un elemento de K se puede hacer en O(|K|) (copiar K sin el elemento) y agregar a Q se puede hacer en O(1) (agregar atras del vector), la complejidad dominante seria la de realizar la comparacion entre todos los elementos de K, que es O(|K|²) < O(n²).
+
+Antes de hacer las llamadas del caso recursivo se aplica la poda dada, para la cual se calcula la suma de los elementos de Q y K, los cual es O(|Q|+|K|) < O(n).
+
+Cabe aclarar que luego de cada llamado recursivo se restaura los valores de Q y K que se pasan por parametros, a traves de una copia previamente hecha, lo cual es O(|Q|+|K|) = O(n).
+
+Finalemente para ejecutar el algoritmo desde el principio, se pasa en el lugar de Q un conjunto vacio y en el lugar de K el conjunto V de actores de la red. Luego de la ejecución de la funcion se imprime a la salida la maxima influencia encontrada y su Q correspondiente que fueron almacenados en variables globales.
+
+1.3
+
+la poda del punto uno corta las ramas de backtraking en donde sin importar que actores de K se sumen a Q, Q no va a tener una influencia mayor a una ya anteriormente vista.
+
+Luego si en primer lugar se considera agregar o no al actor de menor influencia posible (ordenar de menor a mayor), la clique Q va a estar formada en primer lugar por actores con la menor influencia posible. En dicho caso se encontraria rapido la clique mas influyente si existiesen cliques grandes de actores con poca influencia que superen a cliques pequeñas con actores de mucha influencia. 
+
+En cambio, si se considera agregar o no al actor de mayor influencia posible (ordenar de mayor a menor), la clique Q va a estar formada primero por actores con la mayor influencia posible. Por lo tanto, al contrario del caso anterior, se encontraria la clique mas influyente mas rapido si la misma tiene actores con mucha influencias.
+
+Experimento: (mayor|menor)
+
+		mayor	menor
+
+bock200_2:	0.19	0,59
+bock200_3:	0.59	6,21
+bock200_4:	1.78	41,69
+c-fat-200_1:	0.00	0.03
+c-fat-500_2:	0.01	0.01
+c-fat-500_5:	0.01	0.07
+c-fat-500_10:	0.05	0.18
+hamming8_4:	3.76	133.32
+MANNa9:	0.80	0.93
+
+Finalmente, como muestra el experimento, ordenar a los actores de mayor a menor segun influencia parece ser mas convieniente que de la otra manera. Pensamos que esto es asi por que es poco probable tener una clique grande que no contenga ningun elemento con influencia grande y a la vez ser lo suficientemente grade como para ser la clique de mayor influencia. Por lo tanto si se ordenan los actores de mayor a menor influencia se encuentra las cliques mas grandes primero lo que hace mas eficiente la poda.
+
+1.4
+
+Dadas dos conjuntos Q y K de tamaño acotado tal que Q <= |r| y K <= |s|, es decir r+s = n vertices en el grafo:
+
+- Se puede elegir o no poner uno de los r elementos en Q y uno de los s elementos en K. Luego la cantidad de subproblemas es O(2^r.2^s)
+- En cada llamada recursiva se evaluan los casos en que al elemento que saco de K, lo agrego o no a Q. Luego la cantidad de llamadas recursivas es O(2^s)
+
+Como la cantidad de subproblema O(2^r.2^s) >> O(2^s) la cantidad de llamados recursivos, este problema no cumple con la propiedad de superposicion de subproblemas.
