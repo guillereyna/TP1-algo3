@@ -110,6 +110,45 @@ void ordenar_influencia_decreciente(VEp &G){
 	}
 }
 
+void ordenar_influencia_decreciente2(vector<int>& K, const vector<int>& p){
+
+	// como se hace k.pop_back
+	// se ordena V en orden creciente por influencia
+
+	int min;
+	int min_idx;
+	int aux;
+
+	vector<int> p_copy = {};
+
+	for(int i = 0; i < K.size(); i++){
+		p_copy.push_back(p[i-1]);
+	}
+
+	for(int i = 0; i < p_copy.size(); i++){
+
+		min = p_copy[i];
+		min_idx = i;
+
+		for(int j = i+1; j < p_copy.size(); j++){
+
+			if(min > p_copy[j]){
+				min = p_copy[j];
+				min_idx = j;
+			}
+		}
+
+		aux = p_copy[i];
+		p_copy[i] = p_copy[min_idx];
+		p_copy[min_idx] = aux;
+
+		aux = K[i];
+		K[i] = K[min_idx];
+		K[min_idx] = aux;
+
+	}
+}
+
 void invertir_orden(VEp &G){
 
 	int aux;

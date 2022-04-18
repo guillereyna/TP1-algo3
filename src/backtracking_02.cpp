@@ -119,7 +119,7 @@ void sortByInfluence(vector<int >& K){
 int greedyMinPartitionK(vector<int>& K, 
                                           const vector<int>& p){
 	
-    sortByInfluence(K);
+    ordenar_influencia_decreciente2(K,p);
 	vector<vector<int > >Indeps;
 	
     for(int e : K){
