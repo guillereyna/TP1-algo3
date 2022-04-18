@@ -92,7 +92,7 @@ int sumaInflVec(const vector<int> & v){
     return res;
 }
 
-bool amigo_de_nadie_en_I(int e, const vector<int>& I){
+bool amigo_de_nadie_en_I(const int& e, const vector<int>& I){
 
 	bool res = true;
 	int i = 0;
@@ -106,19 +106,7 @@ bool amigo_de_nadie_en_I(int e, const vector<int>& I){
 
 	return res;
 }
-
-int poderInfluenciaTotal(const vector<vector<int > > & particion){
-    
-    int pSum = 0;
-    
-    for(int i = 0 ; i < particion.size() ; ++i){
-    
-        pSum+=p[particion[i][0]-1];
-    
-    }
-
-    return pSum;
-}
+ 
 
 bool order(int a, int b){
 	return p[a-1]>p[b-1];
@@ -128,7 +116,7 @@ void sortByInfluence(vector<int >& K){
 	sort(K.begin(),K.end(),order);
 }
 
-vector<vector<int > > greedyMinPartitionK(vector<int>& K, 
+int greedyMinPartitionK(vector<int>& K, 
                                           const vector<int>& p){
 	
     sortByInfluence(K);
@@ -155,9 +143,22 @@ vector<vector<int > > greedyMinPartitionK(vector<int>& K,
 		}
 	}
 
-	return Indeps;
+	int pSum = 0;
+    
+    for(int i = 0 ; i < Indeps.size() ; ++i){
+    
+        pSum+=p[Indeps[i][0]-1];
+    
+    }
+
+    return pSum;
+
 }
 
+bool poda2(vector<int>& K, const vector<int>& Q, const vector<int>& p){
+    return ((greedyMinPartitionK(K, p) + 
+            sumaInflVec(Q)) <= max_sum);
+}
 void mas_influyente(vector<int> &Q, vector<int> &K){
 
     if(K.size() == 0){
@@ -167,10 +168,9 @@ void mas_influyente(vector<int> &Q, vector<int> &K){
 
         if(sumaInflVec(Q)+sumaInflVec(K) < max_sum) return;
 
-        if((poderInfluenciaTotal(greedyMinPartitionK(K, p)) + 
-            sumaInflVec(Q)) <= max_sum){
-            return;
-        }
+        if(poda2(K,Q,p)){
+             return;
+         }
 
         vector<int> K_aux = K;      // O(n)
         vector<int> Q_aux = Q;      // O(n)
