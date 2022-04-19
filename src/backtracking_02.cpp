@@ -119,10 +119,11 @@ void sortByInfluence(vector<int >& K){
 int greedyMinPartitionK(vector<int>& K, 
                                           const vector<int>& p){
 	
-    ordenar_influencia_decreciente2(K,p);
+    //ordenar_influencia_decreciente2(K,p);
+    sortByInfluence(K);
 	vector<vector<int > >Indeps;
 	
-    for(int e : K){
+    for(int& e : K){
 		
         bool pushed = false;
 		
@@ -217,7 +218,7 @@ int main(int argc, char* argv[]){
     K = V; // copy vector
 
 
-    //vector<vector<int>> part = greedyMinPartitionK(K,p);
+    
     mas_influyente(Q,K);
 
     cout << max_sum << endl;
