@@ -8,6 +8,8 @@ src/ej04
 *.output
 src/ej03_bu
 src/ej03_td
+src/backtracking_01
+src/backtracking_02
 informe.fls
 informe.fdb_latexmk
 informe.synctex.gz
