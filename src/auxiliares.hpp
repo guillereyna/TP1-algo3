@@ -2,7 +2,7 @@
 #include <fstream>
 #include <set>
 #include <vector>
-
+#include <algorithm>
 using namespace std;
 
 struct VEp{
@@ -108,6 +108,35 @@ void ordenar_influencia_decreciente(VEp &G){
 		G.V[min_idx] = aux;
 
 	}
+}
+bool pairOrderFst(pair<int,int> a,pair<int,int> b){
+	return a.first > b.first;
+}
+void ordenar_influencia_decreciente2(vector<int>& K, const vector<int>& p){
+
+	// selection sort para K con p
+	
+	for (size_t i = 0; i < K.size(); i++)
+	{
+		int maxP = -1;
+		int posMaxK = -1;
+		for (size_t j = i; j < K.size(); j++)
+		{
+			if (p[K[j]-1] > maxP)
+			{
+				maxP = p[K[j]-1];
+				posMaxK = j;
+			}
+			
+		}
+		int aux = K[i];
+		K[i] = K[posMaxK];
+		K[posMaxK] = aux;
+	}
+	
+
+
+	return;
 }
 
 void invertir_orden(VEp &G){
