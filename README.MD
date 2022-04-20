@@ -42,3 +42,6 @@ Esto devuelve los resultados por salida estándard y deja el output de cada inst
 
 Guillermo José Reyna Maciel, LU 393/20  
 Marco Aurelio Sanchez Sorondo, LU 708/19
+Casado Farall, Joaquín, LU 072/20
+Chumacero, Carlos Nechemias, LU 492/20
+Vitali, Lucas, LU 278/20
