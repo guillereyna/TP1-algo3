@@ -2,13 +2,23 @@ Trabajo práctico 1 de Algoritmos y Estructuras de Datos 3. Primer cuatrimestre 
 
 Facultad de Ciencias Exactas y Naturales de la UBA.
 
-### Compilación y ejecución:
+### Compilación
 
 Para compilar los binarios de todos los ejercicios, utilizar el siguiente comando en el directorio actual:
 
 ```bash
 make all
 ```
+
+Se podrán encontrar los ejecutables `backtracking_01`, `backtracking_02`, `ej03_td`, `ej03_bu`, y `ej04` en el directorio `src/`, y corresponden respectivamente a los ejercicios 1, 2, 3.4, 3.5, y 4. Para ejecutarlos, se debe pasar un input al programa por entrada estándar:
+
+```bash
+./src/<ejecutable> < <instancia>
+```
+
+El resultado se imprime por salida estándar.
+
+### Ejecución (repositorio git)
 
 Para correr todos los experimentos, ejecutar el siguiente comando en el directorio actual:
 
