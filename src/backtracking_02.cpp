@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include "auxiliares.hpp"
+#include "auxiliares_02.hpp"
 using namespace std;
 
 // Variables de entrada
@@ -36,23 +36,34 @@ void eliminar_no_amigos(int v){
 
     // usa K y E globales
 
-    vector<int> K_aux;
+    vector<int> K_aux0;
 
     for(int e : K){
 
-        if(E[v-1][e-1]) K_aux.push_back(e);
+        if(E[v-1][e-1]) K_aux0.push_back(e);
 
     }
 
-    K = K_aux;
+    K = K_aux0;
 }
 
 bool amigo_de_todos (int e, vector<int> &V) {
 
     bool res = true;
 
-    for (int i = 0; i < V.size() && res; ++i) {
+    for (int i = 0; i < (int) V.size() && res; ++i) {
         if (V[i] != e && !E[V[i]-1][e-1]) res = false;
+    }
+
+    return res;
+}
+
+bool amigo_de_ninguno(int e, vector<int> &K){
+
+    bool res = true;
+
+    for(int i = 0; i < (int) K.size(); i++){
+        if(E[e-1][K[i]-1]) res = false;
     }
 
     return res;
@@ -81,84 +92,62 @@ void chequear_invariante(){
     K = K_aux1;
 }
 
-int sumaInflVec(const vector<int> & v){
-    
-    int res = 0;
-    
-    for(int e : v){
-        res += p[e-1];
-    }
-    
-    return res;
-}
-
-bool amigo_de_nadie_en_I(const int& e, const vector<int>& I){
-
-	bool res = true;
-	int i = 0;
-
-	while(i < I.size() && res){
-
-		res &= !(E[e-1][I[i]-1]);
-		++i;
-
-	}
-
-	return res;
-}
- 
-
-bool order(int a, int b){
+bool influence(int a, int b){
 	return p[a-1]>p[b-1];
 }
 
-void sortByInfluence(vector<int >& K){
-	sort(K.begin(),K.end(),order);
+bool invert_influence(int a, int b){
+	return p[a-1]<p[b-1];
 }
 
-int greedyMinPartitionK(vector<int>& K, 
-                                          const vector<int>& p){
-	
-    ordenar_influencia_decreciente2(K,p);
-	vector<vector<int > >Indeps;
-	
+bool poda_por_independientes(){
+
+    vector<vector<int>> indeps; // vector de conjuntos independientes
+    // sort de K por influencia (se pasa por referencia)
+    sort(K.begin(),K.end(),influence);
+
+    // Creo particion de conjuntos independientes
     for(int e : K){
-		
-        bool pushed = false;
-		
-        for(int i = 0 ; i < Indeps.size(); ++i){ // obs: no agrega complejidad
-			
-            if(amigo_de_nadie_en_I(e,Indeps[i])) {
-				
-                Indeps[i].push_back(e);
-				pushed = true;
+
+        int pushed = false;
+
+        for(int i = 0; i < (int) indeps.size(); i++){
+
+            if(amigo_de_ninguno(e,indeps[i])){
+
+                indeps[i].push_back(e);
+                pushed = true;
                 break;
-			}
-			
-		}
 
-		if(!pushed){
-			vector<int> Inew = {e};
-			Indeps.push_back(Inew);
-		}
-	}
+            }
+        }
 
-	int pSum = 0;
-    
-    for(int i = 0 ; i < Indeps.size() ; ++i){
-    
-        pSum+=p[Indeps[i][0]-1];
-    
+        if(!pushed){
+
+            vector<int> I;
+            I.push_back(e);
+            indeps.push_back(I);
+
+        }
     }
 
-    return pSum;
+    // calculo cota
+    int cota_influencia = 0;
+
+    // sumo influencias de Q
+    for(int e : Q){                 // O(n)
+        cota_influencia += p[e-1];
+    }
+
+    // sumo influencia de del mayor de cada I
+    for(int i = 0; i < (int) indeps.size(); i++){                 //O(n)
+        cota_influencia += p[indeps[i][0]-1];
+    }
+
+    return cota_influencia < max_sum; // resultado
 
 }
 
-bool poda2(vector<int>& K, const vector<int>& Q, const vector<int>& p){
-    return ((greedyMinPartitionK(K, p) + 
-            sumaInflVec(Q)) <= max_sum);
-}
 void mas_influyente(vector<int> &Q, vector<int> &K){
 
     if(K.size() == 0){
@@ -166,30 +155,46 @@ void mas_influyente(vector<int> &Q, vector<int> &K){
     }
     else{
 
-        if(sumaInflVec(Q)+sumaInflVec(K) < max_sum) return;
+        // poda
+        /*
+        int cota_influencia = 0;
 
-        if(poda2(K,Q,p)){
-             return;
-         }
+        for(int e : Q){                 // O(n)
+            cota_influencia += p[e-1];
+        }
+        for(int e : K){                 //O(n)
+            cota_influencia += p[e-1];
+        }
+
+        if(cota_influencia < max_sum) return;   //O(1)
+        */
+
+        //poda por independientes
+        if(poda_por_independientes()) return;
+
+        // backtraking
 
         vector<int> K_aux = K;      // O(n)
         vector<int> Q_aux = Q;      // O(n)
 
+        // se toma elemento de K
         int v = K[K.size()-1];      // O(1)
         Q.push_back(v);             // O(1)
         K.pop_back();               // O(1)
         eliminar_no_amigos(v);      // O(n) -> saco los no amigos de K
         chequear_invariante();      // O(n²) -> chequeo en K amigos de Q
         mas_influyente(Q,K);        // llamado recursivo
-        //restaurar_1(Q,K)
+        
+        //restaurar
         K = K_aux;                  // O(n)
         Q = Q_aux;                  // O(n)
         
-
+        // no se toma elemento de K
         K.pop_back();               // O(1)
         chequear_invariante();      // O(n²)
         mas_influyente(Q,K);        // llamdo recursivo
-        //restaruar_2(Q,K)
+        
+        //restaruar
         K = K_aux;                  // O(n)
         Q = Q_aux;                  // O(n)
 
@@ -197,27 +202,25 @@ void mas_influyente(vector<int> &Q, vector<int> &K){
 
 }
 
-int main(int argc, char* argv[]){
+int main(){
 
-    // Q = {};
-    // K = {1,2,3,4};
-    // p = {1,4,3,8};
-    // E = {{0,1,1,0},
-    //      {1,0,1,1},
-    //      {1,1,0,0},
-    //      {0,0,1,0}};
-
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(0);
+    
     VEp sample = readInput(); // llamar con ./backtracking < sample.in
+
+    //ordenar_influencia_decreciente(sample);
+    //invertir_orden(sample.V);
 
     V = sample.V;
     E = sample.E;
     p = sample.p;
 
+    sort(V.begin(),V.end(),invert_influence);// ordena menor a mayor
+
     Q = {};
     K = V; // copy vector
 
-
-    //vector<vector<int>> part = greedyMinPartitionK(K,p);
     mas_influyente(Q,K);
 
     cout << max_sum << endl;

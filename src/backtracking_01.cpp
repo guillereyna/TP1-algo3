@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include "auxiliares.hpp"
+#include "auxiliares_01.hpp"
 using namespace std;
 
 // Variables de entrada
@@ -51,7 +51,7 @@ bool amigo_de_todos (int e, vector<int> &V) {
 
     bool res = true;
 
-    for (int i = 0; i < V.size() && res; ++i) {
+    for (int i = 0; i < (int) V.size() && res; ++i) {
         if (V[i] != e && !E[V[i]-1][e-1]) res = false;
     }
 
@@ -130,24 +130,32 @@ void mas_influyente(vector<int> &Q, vector<int> &K){
 
 }
 
-int main(int argc, char* argv[]){
+bool influence(int a, int b){
+	return p[a-1]>p[b-1];
+}
+
+bool invert_influence(int a, int b){
+	return p[a-1]<p[b-1];
+}
+
+int main(){
 
     std::ios::sync_with_stdio(false);
     std::cin.tie(0);
     
     VEp sample = readInput(); // llamar con ./backtracking < sample.in
 
-    ordenar_influencia_decreciente(sample);
+    //ordenar_influencia_decreciente(sample);
     //invertir_orden(sample);
 
     V = sample.V;
     E = sample.E;
     p = sample.p;
 
+    sort(V.begin(),V.end(),invert_influence);// ordena menor a mayor
+
     Q = {};
     K = V; // copy vector
-
-    cerr << "Llamo mas influyente" << endl;
 
     mas_influyente(Q,K);
 

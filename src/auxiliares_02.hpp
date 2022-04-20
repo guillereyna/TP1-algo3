@@ -11,6 +11,7 @@ struct VEp{
 	vector<int> p;
 
 };
+
 VEp readInput(){
 	string trash;
 	cin >> trash >> trash;
@@ -54,8 +55,6 @@ VEp readInput(){
 
 }
 
-
-
 template<class T>
 void print_vector(const vector<T>& v){
     int n = v.size();
@@ -86,12 +85,12 @@ void ordenar_influencia_decreciente(VEp &G){
 
 	vector<int> p_copy = G.p;
 
-	for(int i = 0; i < p_copy.size(); i++){
+	for(int i = 0; i < (int) p_copy.size(); i++){
 
 		min = p_copy[i];
 		min_idx = i;
 
-		for(int j = i+1; j < p_copy.size(); j++){
+		for(int j = i+1; j < (int) p_copy.size(); j++){
 
 			if(min > p_copy[j]){
 				min = p_copy[j];
@@ -110,10 +109,7 @@ void ordenar_influencia_decreciente(VEp &G){
 	}
 }
 
-void ordenar_influencia_decreciente2(vector<int>& K, const vector<int>& p){
-
-	// como se hace k.pop_back
-	// se ordena V en orden creciente por influencia
+void ordenar_por_influencia(vector<int> &K, vector<int> &p){
 
 	int min;
 	int min_idx;
@@ -121,16 +117,18 @@ void ordenar_influencia_decreciente2(vector<int>& K, const vector<int>& p){
 
 	vector<int> p_copy = {};
 
-	for(int i = 0; i < K.size(); i++){
-		p_copy.push_back(p[i-1]);
+	for(int e : K){
+
+		p_copy.push_back(p[e-1]);
+
 	}
 
-	for(int i = 0; i < p_copy.size(); i++){
+	for(int i = 0; i < (int) p_copy.size(); i++){
 
 		min = p_copy[i];
 		min_idx = i;
 
-		for(int j = i+1; j < p_copy.size(); j++){
+		for(int j = i+1; j < (int) p_copy.size(); j++){
 
 			if(min > p_copy[j]){
 				min = p_copy[j];
@@ -149,15 +147,15 @@ void ordenar_influencia_decreciente2(vector<int>& K, const vector<int>& p){
 	}
 }
 
-void invertir_orden(VEp &G){
+void invertir_orden(vector<int> &V){
 
 	int aux;
 
-	for(int i = 0; i < (G.V.size()/2); i++){
+	for(int i = 0; i < ((int) V.size()/2); i++){
 
-		aux = G.V[i];
-		G.V[i] = G.V[G.p.size()-i-1];
-		G.V[G.p.size()-i-1] = aux;
+		aux = V[i];
+		V[i] = V[V.size()-i-1];
+		V[V.size()-i-1] = aux;
 
 	}
 
