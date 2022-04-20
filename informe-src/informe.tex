@@ -129,7 +129,7 @@ hamming8\_4:	& 3.76 & 133.32 \\
 MANNa9: & 0.80 & 0.93
 \end{tabular}
 \end{center}
-Finalmente, como muestra el experimento, ordenar a los actores de mayor a menor según influencia parece ser mas conveniente que de la otra manera. Pensamos que esto es así por que es poco probable tener una clique grande que no contenga ningún elemento con influencia grande y a la vez ser lo suficientemente grade como para ser la clique de mayor influencia. Por lo tanto si se ordenan los actores de mayor a menor influencia se encuentra las cliques mas grandes primero lo que hace mas eficiente la poda.
+Finalmente, como muestra el experimento, ordenar a los actores de mayor a menor según influencia parece ser mas conveniente que de la otra manera. Pensamos que esto es así por que es poco probable tener una clique grande que no contenga ningún elemento con influencia grande y a la vez ser lo suficientemente grande como para ser la clique de mayor influencia. Por lo tanto si se ordenan los actores de mayor a menor influencia se encuentra las cliques mas grandes primero lo que hace mas eficiente la poda.
 
 \subsection{Operación de extensión}
 \emph{La operación de extensión define una función recursiva cuya descripción formal puede ser compleja. Sin definir formalmente esta función, explicar por qué la misma no tiene la propiedad de
@@ -180,7 +180,7 @@ El paso 3 del algoritmo tiene complejidad constante (amortizado) pues se trata d
 \textbf{Nota:} Asumimos que agregar un nuevo elemento al final de un vector es O(1) -amortizando-.
 
 \subsection{Poda}
-Para implementar \'esto, basta con computar la suma de las influencias de $Q$, sumarla con la suma de los poderes de influencia de la partici\'on obtenida (el primer elemento de cada conjunto, pues est\'an en orden) y chequear que sea menor al poder de influencia m\'aximo hasta el momento (ya calculado). Caso contrario se corta la recursi\'on.\\
+Para implementar \'esto, basta con computar la suma de las influencias de $Q$, sumarla con la suma de los poderes de influencia de la partici\'on obtenida (el primer elemento de cada conjunto, pues est\'an en orden) y chequear que sea mayor al poder de influencia m\'aximo hasta el momento (ya calculado). Caso contrario se corta la recursi\'on.\\
 
 \subsection{Experimentaci\'on}
 
@@ -205,7 +205,7 @@ Para describir cómo el problema de selección de actividades es equivalente al 
 
 Proponemos representar a cada actividad como un nodo en un grafo, cuyo peso representa su beneficio y que está conectado por aristas a todas las otras actividades con las que es compatible. Por lo tanto, cualquier subconjunto de actividades compatibles va a ser representado en el grafo como un subgrafo de nodos que están conectados por aristas con todos los otros nodos en el subgrafo. Encontrar el subconjunto de actividades compatibles con mayor beneficio es entonces equivalente a encontrar al subgrafo completo de peso máximo.
 
-Si tenemos una solución para el problema de la clique más influyente, tenemos una solución para el problema de encontrar el subgrafo con mayor peso de un grafo, y por lo tanto la solución al problema de selección de actividades.
+Si tenemos una solución para el problema de la clique más influyente, entonces tenemos una solución para el problema de encontrar el subgrafo completo con mayor peso de un grafo, y por lo tanto la solución al problema de selección de actividades.
 
 \subsection{Función recursiva}
 \emph{Supongamos que $A$ está ordenado por orden de comienzo de la actividad, i.e., $s_i \leq s_{i+1}$ para todo $1 \leq i < n$. Escribir una función recursiva $b : {0, . . . , n} \rightarrow \mathbb{N}$ tal que:
@@ -223,14 +223,14 @@ $$b(i) = \begin{cases}
 
 Donde $p_i$ es el índice de la primera actividad compatible con la actividad de índice i, con $p_i > i$ (utilizando fuertemente que $A$ está ordenado de menor a mayor tiempo de inicio). \\
 
-En cada llamado recursivo, se consideran ambos el caso en que no se selecciona una actividad y el caso en el que se selecciona la actividad, para una cantidad de llamados recursivos en el orden de $2^n$. Considerando que $0 \leq i \leq n$, sabemos que hay $n+1$ valores posibles de $b$, satisfaciendo la propiedad de superposición de problemas.
+En cada llamado recursivo, se consideran ambos el caso en que no se selecciona una actividad y el caso en el que se selecciona la actividad, para una cantidad de llamados recursivos en $O(2^n)$. Considerando que $0 \leq i \leq n$, sabemos que hay $n+1$ valores posibles de $b$, satisfaciendo la propiedad de superposición de problemas.
 
 \subsection{Demostración}
 Sea $A = \{A_0, ... , A_{n-1}\}$ nuestro conjunto de actividades ordenadas por comienzo tal que $s_i \leq s_{i+1},  \forall  1 \leq i < n$ \\ \\
-Siendo $G_i = \{G \subseteq \{ A_i, ..., A_{n-1} \} / \forall (A_j, A_k) \Rightarrow t_j < s_k, \hspace{0.25cm} i \leq j < k < n, \forall A_j, A_k \in G \}$ el espacio de soluciones, es decir los subconjuntos de actividades a partir de i que no se solapan.
+Siendo $G_i = \{G \subseteq \{ A_i, ..., A_{n-1} \} \ | \ \forall (A_j, A_k) \Rightarrow t_j < s_k, \hspace{0.25cm} i \leq j < k < n, \forall A_j, A_k \in G \}$ el espacio de soluciones, es decir los subconjuntos de actividades a partir de i que no se solapan.
 \\
-Será $g_i = max \{ \sum_{i \in G } b_i / G \in G_i\}$ el maximo beneficio que se pueda obtener de un subconjunto de actividades $\in$ G
-\\ \\ 
+Será $g_i = max \{ \sum_{i \in G } b_i \ | \ G \in G_i\}$ el máximo beneficio que se pueda obtener de un subconjunto de actividades $\in$ G. \\ \\
+Caso base: $g_n = 0$ porque no hay actividades para considerar, y $b(n) = g_n = 0$ por definición. \\ \\
 Paso Inductivo:\\
 $HI: b(k) = g_k, \forall 0 < h \leq k \leq n$\\
 $Qvq: b(h-1) = G_{h-1}$
@@ -243,6 +243,8 @@ $b(h-1) = max \{g_h, g_{P_{h-1}} + b_{h-1} \}$
     \item Si $A_{h-1}$ es compatible con $G_h \Rightarrow g_{h-1} = g_h + b_{h-1} = max\{g_h, g_h + b_{h-1}\} = max\{g_h, g_{P_{h-1}} + b_{h-1}\}$
     \item Si $A_{h-1}$ no es compatible con $G_h \Rightarrow g_{h-1} = max\{g_h, g_{P_{h-1}} + b_{h-1}\}$
 \end{itemize}
+
+Entonces, $g_{h-1} = max\{g_h, g_{P_{h-1}} + b_{h-1}\}. \ \square$
 \subsection{Implementación top-down}
 \emph{Implementar un algoritmo de programación dinámica top-down para el problema de selección de actividades. El algoritmo debe computar el beneficio de la solución óptima en $O(n)$.} \\
 
@@ -317,7 +319,7 @@ Paso inductivo: \\
 
 HI: $\overline{b}(S_{Y'_h}) = max\{b(S_{Y_h}\}$  
 
-\textbf{Qvq:} $\overline{b}(S_{Y'_{h+1}} = max\{b(S_{Y_h+1})\}$ \\
+\textbf{Qvq:} $\overline{b}(S_{Y'_{h+1}}) = max\{b(S_{Y_h+1})\}$ \\
 
 $\overline{b}(S_{Y'_{h+1}} = \overline{b}(S_{Y'_h}) + b_{A_{h+1}} \cdot E'_{h+1} \overset{HI}{=} max\{b(S_{Y_h})\} + b_{A_{h+1}} \cdot E'_{h+1}$
 
@@ -328,7 +330,7 @@ $\overline{b}(S_{Y'_{h+1}} = \overline{b}(S_{Y'_h}) + b_{A_{h+1}} \cdot E'_{h+1}
     \item Si $A_{h+1}$ es compatible: \begin{itemize}
         \item $E'_{h+1} = 1$ ya que es la actividad compatible con menor tiempo de finalización, \\ luego $\overline{b}(S_{Y'_{h+1}}) = max\{b(S_{Y_h})\} + 1$.
         \item $$\begin{rcases} E_{h+1} = 0 \implies \text{en el óptimo hasta h} \ max\{b(S_{Y_h})\} & \\
-              E_{h+1} = 0 \implies \text{en el óptimo hasta h} \ max\{b(S_{Y_h})\} + 1 & 
+              E_{h+1} = 1 \implies \text{en el óptimo hasta h} \ max\{b(S_{Y_h})\} + 1 & 
             \end{rcases} = max\{b(S_{Y_h})\} + 1$$
     \end{itemize}
 \end{itemize}
