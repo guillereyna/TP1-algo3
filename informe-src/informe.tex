@@ -87,9 +87,9 @@ En el caso recursivo, sea $v$ el ultimo elemento de $K$, se llama recursivamente
 
 En el primer caso si se agrego a $v$, se puede asumir que $K$ cumplía el invariante, por lo que cumplía (1) antes de agregar a $v$, por lo que solamente hace falta eliminar a los elementos en $K$ que no son amigos de $v$, lo cual se hace en $O(|K|) < O(n)$. Si no se agrega a $v$ a $Q$ este invariante no hace falta chequear por que ya se cumplía.
 
-En el segundo caso, por cada elemento en $K$ tenemos que ver su relación con los demás elementos en $K$, y eliminarlo de $K$ y agregarlo a $Q$ en caso de que sea amigos de todos en $K$. Como eliminar un elemento de $K$ se puede hacer en $O(|K|)$ (copiar $K$ sin el elemento) y agregar a $Q$ se puede hacer en $O(1)$ (agregar atrás del vector), la complejidad dominante seria la de realizar la comparación entre todos los elementos de $K$, que es $O($K$^2) < O(n^2)$.
+En el segundo caso, por cada elemento en $K$ tenemos que ver su relación con los demás elementos en $K$, y eliminarlo de $K$ y agregarlo a $Q$ en caso de que sea amigos de todos en $K$. Como eliminar un elemento de $K$ se puede hacer en $O(|K|)$ (copiar $K$ sin el elemento) y agregar a $Q$ se puede hacer en $O(1)$ (agregar atrás del vector), la complejidad dominante seria la de realizar la comparación entre todos los elementos de $K$, que es $O(K^2) < O(n^2)$.
 
-Antes de hacer las llamadas del caso recursivo se aplica la poda dada, para la cual se calcula la suma de los elementos de $Q$ y $K$, los cual es O(|$Q$|+|$K$|) < O(n).
+Antes de hacer las llamadas del caso recursivo se aplica la poda dada, para la cual se calcula la suma de los elementos de $Q$ y $K$, los cual es $O(|Q|+|K|) < O(n)$.
 
 Cabe aclarar que luego de cada llamado recursivo se restaura los valores de $Q$ y $K$ que se pasan por parámetros, a través de una copia previamente hecha, lo cual es $O(|Q|+|K|) = O(n)$.
 
@@ -227,13 +227,13 @@ En cada llamado recursivo, se consideran ambos el caso en que no se selecciona u
 
 \subsection{Demostración}
 Sea $A = \{A_0, ... , A_{n-1}\}$ nuestro conjunto de actividades ordenadas por comienzo tal que $s_i \leq s_{i+1},  \forall  1 \leq i < n$ \\ \\
-Siendo $G_i = \{G \subseteq \{ A_i, ..., A_{n-1} \} \ | \ \forall (A_j, A_k) \Rightarrow t_j < s_k, \hspace{0.25cm} i \leq j < k < n, \forall A_j, A_k \in G \}$ el espacio de soluciones, es decir los subconjuntos de actividades a partir de i que no se solapan.
+Siendo $G_i = \{G \subseteq \{ A_i, ..., A_{n-1} \} \ | \ \forall A_j, A_k \in G$ con $i \leq j < k < n \Rightarrow t_j < s_k\}$ el espacio de soluciones, es decir los subconjuntos de actividades a partir de i que no se solapan.
 \\
 Será $g_i = max \{ \sum_{i \in G } b_i \ | \ G \in G_i\}$ el máximo beneficio que se pueda obtener de un subconjunto de actividades $\in$ G. \\ \\
-Caso base: $g_n = 0$ porque no hay actividades para considerar, y $b(n) = g_n = 0$ por definición. \\ \\
+Caso base: \\ $g_n = 0$ porque no hay actividades para considerar, y $b(n) = 0$ por definición. Luego $b(n) = g_n$\\ \\
 Paso Inductivo:\\
 $HI: b(k) = g_k, \forall 0 < h \leq k \leq n$\\
-$Qvq: b(h-1) = G_{h-1}$
+$Qvq: b(h-1) = g_{h-1}$
 \\ \\
 $b(h-1) = max \{b(h), b(P_{h-1} + b_{k-1} \} \Leftrightarrow$
 \\
