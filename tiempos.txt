@@ -1,0 +1,342 @@
+Corriendo experimento 1...
+Procesando brock200_1.clq
+Llamo mas influyente
+20.49
+Procesando brock200_2.clq
+Llamo mas influyente
+0.09
+Procesando brock200_3.clq
+Llamo mas influyente
+0.52
+Procesando brock200_4.clq
+Llamo mas influyente
+1.57
+Procesando brock400_2.clq
+Llamo mas influyente
+Command exited with non-zero status 124
+600.00
+Procesando brock400_3.clq
+Llamo mas influyente
+Command exited with non-zero status 124
+600.00
+Procesando brock400_4.clq
+Llamo mas influyente
+Command exited with non-zero status 124
+600.00
+Procesando C125.9.clq
+Llamo mas influyente
+131.82
+Procesando C250.9.clq
+Llamo mas influyente
+Command exited with non-zero status 124
+600.00
+Procesando c-fat200-1.clq
+Llamo mas influyente
+0.02
+Procesando c-fat200-2.clq
+Llamo mas influyente
+0.01
+Procesando c-fat200-5.clq
+Llamo mas influyente
+0.00
+Procesando c-fat500-10.clq
+Llamo mas influyente
+0.06
+Procesando c-fat500-1.clq
+Llamo mas influyente
+0.00
+Procesando c-fat500-2.clq
+Llamo mas influyente
+0.01
+Procesando c-fat500-5.clq
+Llamo mas influyente
+0.01
+Procesando DSJC500_5.clq
+Llamo mas influyente
+11.37
+Procesando gen200_p0.9_44.clq
+Llamo mas influyente
+Command exited with non-zero status 124
+600.00
+Procesando gen200_p0.9_55.clq
+Llamo mas influyente
+Command exited with non-zero status 124
+600.00
+Procesando hamming6-2.clq
+Llamo mas influyente
+0.01
+Procesando hamming6-4.clq
+Llamo mas influyente
+0.00
+Procesando hamming8-2.clq
+Llamo mas influyente
+Command exited with non-zero status 124
+600.00
+Procesando hamming8-4.clq
+Llamo mas influyente
+3.17
+Procesando johnson16-2-4.clq
+Llamo mas influyente
+3.35
+Procesando johnson8-2-4.clq
+Llamo mas influyente
+0.00
+Procesando johnson8-4-4.clq
+Llamo mas influyente
+0.02
+Procesando MANN_a9.clq
+Llamo mas influyente
+0.72
+Procesando p_hat1000-1.clq
+Llamo mas influyente
+2.64
+Procesando p_hat1500-1.clq
+Llamo mas influyente
+24.53
+Procesando p_hat300-1.clq
+Llamo mas influyente
+0.01
+Procesando p_hat300-2.clq
+Llamo mas influyente
+4.46
+Procesando p_hat300-3.clq
+Llamo mas influyente
+Command exited with non-zero status 124
+600.00
+Procesando p_hat500-1.clq
+Llamo mas influyente
+0.13
+Procesando p_hat500-2.clq
+Llamo mas influyente
+Command exited with non-zero status 124
+600.00
+Procesando p_hat700-1.clq
+Llamo mas influyente
+0.58
+Procesando p_hat700-2.clq
+Llamo mas influyente
+Command exited with non-zero status 124
+600.00
+Procesando san1000.clq
+Llamo mas influyente
+Command exited with non-zero status 124
+600.00
+Procesando san200_0.9_2.clq
+Llamo mas influyente
+Command exited with non-zero status 124
+600.00
+Procesando san200_0.9_3.clq
+Llamo mas influyente
+Command exited with non-zero status 124
+600.00
+Procesando san400_0.7_1.clq
+Llamo mas influyente
+Command exited with non-zero status 124
+600.00
+Procesando san400_0.7_2.clq
+Llamo mas influyente
+Command exited with non-zero status 124
+600.00
+Procesando san400_0.7_3.clq
+Llamo mas influyente
+Command exited with non-zero status 124
+600.00
+Procesando sanr200_0.7.clq
+Llamo mas influyente
+4.55
+Procesando sanr200_0.9.clq
+Llamo mas influyente
+Command exited with non-zero status 124
+600.00
+Procesando sanr400_0.5.clq
+Llamo mas influyente
+3.48
+Corriendo experimento 2...
+Procesando brock200_1.clq
+23.40
+Procesando brock200_2.clq
+0.18
+Procesando brock200_3.clq
+0.72
+Procesando brock200_4.clq
+4.13
+Procesando brock400_2.clq
+Command exited with non-zero status 124
+600.00
+Procesando brock400_3.clq
+Command exited with non-zero status 124
+600.00
+Procesando brock400_4.clq
+Command exited with non-zero status 124
+600.00
+Procesando C125.9.clq
+322.27
+Procesando C250.9.clq
+Command exited with non-zero status 124
+600.00
+Procesando c-fat200-1.clq
+0.00
+Procesando c-fat200-2.clq
+0.00
+Procesando c-fat200-5.clq
+0.01
+Procesando c-fat500-10.clq
+0.05
+Procesando c-fat500-1.clq
+0.01
+Procesando c-fat500-2.clq
+0.03
+Procesando c-fat500-5.clq
+0.02
+Procesando DSJC500_5.clq
+25.62
+Procesando gen200_p0.9_44.clq
+Command exited with non-zero status 124
+600.00
+Procesando gen200_p0.9_55.clq
+Command exited with non-zero status 124
+600.00
+Procesando hamming6-2.clq
+0.00
+Procesando hamming6-4.clq
+0.00
+Procesando hamming8-2.clq
+47.96
+Procesando hamming8-4.clq
+5.99
+Procesando johnson16-2-4.clq
+1.56
+Procesando johnson8-2-4.clq
+0.00
+Procesando johnson8-4-4.clq
+0.06
+Procesando MANN_a9.clq
+0.00
+Procesando p_hat1000-1.clq
+6.00
+Procesando p_hat1500-1.clq
+54.82
+Procesando p_hat300-1.clq
+0.05
+Procesando p_hat300-2.clq
+26.55
+Procesando p_hat300-3.clq
+Command exited with non-zero status 124
+600.00
+Procesando p_hat500-1.clq
+0.31
+Procesando p_hat500-2.clq
+Command exited with non-zero status 124
+600.00
+Procesando p_hat700-1.clq
+1.26
+Procesando p_hat700-2.clq
+Command exited with non-zero status 124
+600.00
+Procesando san1000.clq
+203.78
+Procesando san200_0.9_2.clq
+Command exited with non-zero status 124
+600.00
+Procesando san200_0.9_3.clq
+Command exited with non-zero status 124
+600.00
+Procesando san400_0.7_1.clq
+Command exited with non-zero status 124
+600.00
+Procesando san400_0.7_2.clq
+Command exited with non-zero status 124
+600.00
+Procesando san400_0.7_3.clq
+Command exited with non-zero status 124
+600.00
+Procesando sanr200_0.7.clq
+10.16
+Procesando sanr200_0.9.clq
+Command exited with non-zero status 124
+600.00
+Procesando sanr400_0.5.clq
+6.79
+Corriendo experimento 3...
+Corriendo experimento con implementación top-down
+Procesando instancia_10.txt
+0.03
+Procesando instancia_11.txt
+0.26
+Procesando instancia_12.txt
+0.23
+Procesando instancia_13.txt
+0.25
+Procesando instancia_1.txt
+0.00
+Procesando instancia_2.txt
+0.00
+Procesando instancia_3.txt
+0.00
+Procesando instancia_4.txt
+0.00
+Procesando instancia_5.txt
+0.00
+Procesando instancia_6.txt
+0.00
+Procesando instancia_7.txt
+0.00
+Procesando instancia_8.txt
+0.03
+Procesando instancia_9.txt
+0.02
+Corriendo experimento con implementación bottom-up
+Procesando instancia_10.txt
+0.02
+Procesando instancia_11.txt
+0.21
+Procesando instancia_12.txt
+0.21
+Procesando instancia_13.txt
+0.19
+Procesando instancia_1.txt
+0.00
+Procesando instancia_2.txt
+0.00
+Procesando instancia_3.txt
+0.00
+Procesando instancia_4.txt
+0.00
+Procesando instancia_5.txt
+0.00
+Procesando instancia_6.txt
+0.00
+Procesando instancia_7.txt
+0.00
+Procesando instancia_8.txt
+0.01
+Procesando instancia_9.txt
+0.01
+Corriendo experimento 4...
+Procesando interval_instance_1
+0.00
+Procesando interval_instance_10
+0.02
+Procesando interval_instance_11
+0.43
+Procesando interval_instance_12
+0.38
+Procesando interval_instance_13
+0.38
+Procesando interval_instance_2
+0.00
+Procesando interval_instance_3
+0.00
+Procesando interval_instance_4
+0.00
+Procesando interval_instance_5
+0.00
+Procesando interval_instance_6
+0.00
+Procesando interval_instance_7
+0.00
+Procesando interval_instance_8
+0.03
+Procesando interval_instance_9
+0.02
+Experimentos terminados. Se puede encontrar el output de cada experimento en data/output-*/ .
