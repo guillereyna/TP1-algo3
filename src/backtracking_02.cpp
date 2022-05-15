@@ -109,7 +109,7 @@ bool amigo_de_nadie_en_I(const int& e, const vector<int>& I){
  
 
 bool order(int a, int b){
-	return p[a-1]>p[b-1];
+	return p[a-1]<p[b-1];
 }
 
 void sortByInfluence(vector<int >& K){
@@ -120,11 +120,12 @@ int greedyMinPartitionK(vector<int>& K,
                                           const vector<int>& p){
 	
     //ordenar_influencia_decreciente2(K,p);
-    sortByInfluence(K);
+    //sortByInfluence(K);
 	vector<vector<int > >Indeps;
 	
-    for(int& e : K){
+    for(int r = K.size()-1; r >=0 ; --r){
 		
+        int& e = K[r];
         bool pushed = false;
 		
         for(int i = 0 ; i < Indeps.size(); ++i){ // obs: no agrega complejidad
@@ -218,7 +219,9 @@ int main(int argc, char* argv[]){
     K = V; // copy vector
 
 
-    
+    //ORDENAMOS UNA SOLA VEZ POR INFLUENCIA CRECIENTE
+    sortByInfluence(K);
+    //
     mas_influyente(Q,K);
 
     cout << max_sum << endl;
