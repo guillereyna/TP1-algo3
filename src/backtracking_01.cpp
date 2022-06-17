@@ -17,20 +17,17 @@ int max_sum = 0;
 
 vector<int> Q_max;
 
-void procesar(){
-
+int influencia(const vector<int >& Q, const vector<int> & infl){
     int acc = 0;
 
     for(int e : Q){
-        acc += p[e-1];
+        acc += infl[e-1];
     }
 
-    if(acc > max_sum){
-        max_sum = acc;
-        Q_max = Q;
-    }
-    
+    return acc;
 }
+
+
 
 void eliminar_no_amigos(int v){
 
@@ -58,7 +55,7 @@ bool amigo_de_todos (int e, vector<int> &V) {
     return res;
 }
 
-void chequear_invariante(){
+void restaurar_invariante(){
     // Usa Q y K globales
     vector<int> K_aux0, K_aux1;
     
@@ -84,10 +81,14 @@ void chequear_invariante(){
 void mas_influyente(vector<int> &Q, vector<int> &K){
 
     if(K.size() == 0){
-        procesar();                 // O(n) -> imprimo Q
+        int inf_Q = influencia(Q, p); // O(n) 
+        if(inf_Q > max_sum){
+            max_sum = inf_Q;
+            Q_max = Q;
+        }                 
     }
     else{
-
+        //cerr<<("recur\n");
         // poda
         int cota_influencia = 0;
 
@@ -110,7 +111,7 @@ void mas_influyente(vector<int> &Q, vector<int> &K){
         Q.push_back(v);             // O(1)
         K.pop_back();               // O(1)
         eliminar_no_amigos(v);      // O(n) -> saco los no amigos de K
-        chequear_invariante();      // O(n²) -> chequeo en K amigos de Q
+        restaurar_invariante();      // O(n²) -> chequeo en K amigos de Q
         mas_influyente(Q,K);        // llamado recursivo
         
         //restaurar
@@ -119,7 +120,7 @@ void mas_influyente(vector<int> &Q, vector<int> &K){
         
         // no se toma elemento de K
         K.pop_back();               // O(1)
-        chequear_invariante();      // O(n²)
+        restaurar_invariante();      // O(n²)
         mas_influyente(Q,K);        // llamdo recursivo
         
         //restaruar

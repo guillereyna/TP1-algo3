@@ -58,7 +58,7 @@ bool amigo_de_todos (int e, vector<int> &V) {
     return res;
 }
 
-void chequear_invariante(){
+void restaurar_invariante(){
     // Usa Q y K globales
     vector<int> K_aux0, K_aux1;
     
@@ -109,22 +109,23 @@ bool amigo_de_nadie_en_I(const int& e, const vector<int>& I){
  
 
 bool order(int a, int b){
-	return p[a-1]>p[b-1];
+	return p[a-1]<p[b-1];
 }
 
 void sortByInfluence(vector<int >& K){
 	sort(K.begin(),K.end(),order);
 }
 
-int greedyMinPartitionK(vector<int>& K, 
+int greedyMinPartitionK(const vector<int>& K, 
                                           const vector<int>& p){
 	
     //ordenar_influencia_decreciente2(K,p);
-    sortByInfluence(K);
+    //sortByInfluence(K);
 	vector<vector<int > >Indeps;
 	
-    for(int& e : K){
+    for(int r = K.size()-1; r >=0 ; --r){
 		
+        const int& e = K[r];
         bool pushed = false;
 		
         for(int i = 0 ; i < Indeps.size(); ++i){ // obs: no agrega complejidad
@@ -155,15 +156,28 @@ int greedyMinPartitionK(vector<int>& K,
     return pSum;
 
 }
+int influencia(const vector<int >& Q, const vector<int> & infl){
+    int acc = 0;
+
+    for(int e : Q){
+        acc += infl[e-1];
+    }
+
+    return acc;
+}
 
 bool poda2(vector<int>& K, const vector<int>& Q, const vector<int>& p){
     return ((greedyMinPartitionK(K, p) + 
             sumaInflVec(Q)) <= max_sum);
 }
-void mas_influyente(vector<int> &Q, vector<int> &K){
+void mas_influyente_rec(vector<int> &Q, vector<int> &K){
 
     if(K.size() == 0){
-        procesar();                 // O(n) -> imprimo Q
+        int inf_Q = influencia(Q, p); // O(n) 
+        if(inf_Q > max_sum){
+            max_sum = inf_Q;
+            Q_max = Q;
+        }               // O(n) -> imprimo Q
     }
     else{
 
@@ -180,16 +194,16 @@ void mas_influyente(vector<int> &Q, vector<int> &K){
         Q.push_back(v);             // O(1)
         K.pop_back();               // O(1)
         eliminar_no_amigos(v);      // O(n) -> saco los no amigos de K
-        chequear_invariante();      // O(n²) -> chequeo en K amigos de Q
-        mas_influyente(Q,K);        // llamado recursivo
+        restaurar_invariante();      // O(n²) -> chequeo en K amigos de Q
+        mas_influyente_rec(Q,K);        // llamado recursivo
         //restaurar_1(Q,K)
         K = K_aux;                  // O(n)
         Q = Q_aux;                  // O(n)
         
 
         K.pop_back();               // O(1)
-        chequear_invariante();      // O(n²)
-        mas_influyente(Q,K);        // llamdo recursivo
+        restaurar_invariante();      // O(n²)
+        mas_influyente_rec(Q,K);        // llamdo recursivo
         //restaruar_2(Q,K)
         K = K_aux;                  // O(n)
         Q = Q_aux;                  // O(n)
@@ -197,7 +211,14 @@ void mas_influyente(vector<int> &Q, vector<int> &K){
     }
 
 }
+void mas_influyente(vector<int> &Q, vector<int> &K){
+    sortByInfluence(K);
+    
+    mas_influyente_rec(Q,K);
 
+    
+
+}
 int main(int argc, char* argv[]){
 
     // Q = {};
@@ -219,6 +240,7 @@ int main(int argc, char* argv[]){
 
 
     
+    //
     mas_influyente(Q,K);
 
     cout << max_sum << endl;
