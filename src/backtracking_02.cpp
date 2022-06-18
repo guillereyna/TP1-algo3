@@ -4,7 +4,7 @@
 #include "auxiliares.hpp"
 using namespace std;
 
-void procesar(vector<int> &p, vector<int> &Q, int &max_sum, vector<int> &Q_max){
+void procesar(const vector<int> &p, vector<int> &Q, int &max_sum, vector<int> &Q_max){
     int acc = 0;
 
     for(int e : Q){
@@ -92,7 +92,7 @@ bool amigo_de_nadie_en_I(const vector<vector<bool>> &E, const int& e, const vect
 }
  
 
-bool order(vector<int> &p, int a, int b){
+bool order(const vector<int> &p, int a, int b){
 	return p[a-1]<p[b-1];
 }
 
