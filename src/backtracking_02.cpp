@@ -4,21 +4,7 @@
 #include "auxiliares.hpp"
 using namespace std;
 
-// Variables de entrada
-vector<int> V;
-vector<vector<bool>> E;
-vector<int> p;
-
-// Variables de backtraking
-vector<int> Q;
-vector<int> K;
-
-int max_sum = 0;
-
-vector<int> Q_max;
-
-void procesar(){
-
+void procesar(vector<int> &p, vector<int> &Q, int &max_sum, vector<int> &Q_max){
     int acc = 0;
 
     for(int e : Q){
@@ -29,11 +15,9 @@ void procesar(){
         max_sum = acc;
         Q_max = Q;
     }
-    
 }
 
-void eliminar_no_amigos(int v){
-
+void eliminar_no_amigos(const vector<vector<bool>> &E, vector<int> &K, int v){
     // usa K y E globales
 
     vector<int> K_aux;
@@ -47,7 +31,7 @@ void eliminar_no_amigos(int v){
     K = K_aux;
 }
 
-bool amigo_de_todos (int e, vector<int> &V) {
+bool amigo_de_todos (const vector<vector<bool>> &E, int e, vector<int> &V) {
 
     bool res = true;
 
@@ -58,20 +42,20 @@ bool amigo_de_todos (int e, vector<int> &V) {
     return res;
 }
 
-void restaurar_invariante(){
+void restaurar_invariante(const vector<vector<bool>> &E, vector<int> &Q, vector<int> &K){
     // Usa Q y K globales
     vector<int> K_aux0, K_aux1;
     
     // e in K amigos de todos en Q
     for (int e : K) {
-        if (amigo_de_todos(e, Q)) {
+        if (amigo_de_todos(E, e, Q)) {
             K_aux0.push_back(e);
         }
     }
     
     // e in K amigos de todos en K
     for (int e : K_aux0) {
-        if (amigo_de_todos(e, K_aux0)){ 
+        if (amigo_de_todos(E, e, K_aux0)){ 
             Q.push_back(e);
         } else {
             K_aux1.push_back(e);
@@ -81,7 +65,7 @@ void restaurar_invariante(){
     K = K_aux1;
 }
 
-int sumaInflVec(const vector<int> & v){
+int sumaInflVec(const vector<int> &p, const vector<int> & v){
     
     int res = 0;
     
@@ -92,7 +76,7 @@ int sumaInflVec(const vector<int> & v){
     return res;
 }
 
-bool amigo_de_nadie_en_I(const int& e, const vector<int>& I){
+bool amigo_de_nadie_en_I(const vector<vector<bool>> &E, const int& e, const vector<int>& I){
 
 	bool res = true;
 	int i = 0;
@@ -108,7 +92,7 @@ bool amigo_de_nadie_en_I(const int& e, const vector<int>& I){
 }
  
 
-bool order(int a, int b){
+bool order(vector<int> &p, int a, int b){
 	return p[a-1]<p[b-1];
 }
 
@@ -116,8 +100,7 @@ void sortByInfluence(vector<int >& K){
 	sort(K.begin(),K.end(),order);
 }
 
-int greedyMinPartitionK(const vector<int>& K, 
-                                          const vector<int>& p){
+int greedyMinPartitionK(const vector<vector<bool>> &E, const vector<int>& K, const vector<int>& p){
 	
     //ordenar_influencia_decreciente2(K,p);
     //sortByInfluence(K);
@@ -130,7 +113,7 @@ int greedyMinPartitionK(const vector<int>& K,
 		
         for(int i = 0 ; i < Indeps.size(); ++i){ // obs: no agrega complejidad
 			
-            if(amigo_de_nadie_en_I(e,Indeps[i])) {
+            if(amigo_de_nadie_en_I(E,e,Indeps[i])) {
 				
                 Indeps[i].push_back(e);
 				pushed = true;
@@ -166,12 +149,12 @@ int influencia(const vector<int >& Q, const vector<int> & infl){
     return acc;
 }
 
-bool poda2(vector<int>& K, const vector<int>& Q, const vector<int>& p){
-    return ((greedyMinPartitionK(K, p) + 
-            sumaInflVec(Q)) <= max_sum);
+bool poda2(const vector<vector<bool>> &E, vector<int>& K, const vector<int>& Q, const vector<int>& p, int max_sum){
+    return ((greedyMinPartitionK(E, K, p) + 
+            sumaInflVec(p, Q)) <= max_sum);
 }
-void mas_influyente_rec(vector<int> &Q, vector<int> &K){
 
+void mas_influyente_rec(const vector<vector<bool>> &E, const vector<int> &p, vector<int> &Q, vector<int> &K, int &max_sum, vector<int> &Q_max){
     if(K.size() == 0){
         int inf_Q = influencia(Q, p); // O(n) 
         if(inf_Q > max_sum){
@@ -180,10 +163,9 @@ void mas_influyente_rec(vector<int> &Q, vector<int> &K){
         }               // O(n) -> imprimo Q
     }
     else{
+        if(sumaInflVec(p, Q)+sumaInflVec(p, K) < max_sum) return;
 
-        if(sumaInflVec(Q)+sumaInflVec(K) < max_sum) return;
-
-        if(poda2(K,Q,p)){
+        if(poda2(E,K,Q,p,max_sum)){
              return;
          }
 
@@ -193,34 +175,29 @@ void mas_influyente_rec(vector<int> &Q, vector<int> &K){
         int v = K[K.size()-1];      // O(1)
         Q.push_back(v);             // O(1)
         K.pop_back();               // O(1)
-        eliminar_no_amigos(v);      // O(n) -> saco los no amigos de K
-        restaurar_invariante();      // O(n²) -> chequeo en K amigos de Q
-        mas_influyente_rec(Q,K);        // llamado recursivo
+        eliminar_no_amigos(E, K, v);      // O(n) -> saco los no amigos de K
+        restaurar_invariante(E, Q, K);      // O(n²) -> chequeo en K amigos de Q
+        mas_influyente_rec(E, p, Q, K, max_sum, Q_max);        // llamado recursivo
         //restaurar_1(Q,K)
         K = K_aux;                  // O(n)
         Q = Q_aux;                  // O(n)
         
 
         K.pop_back();               // O(1)
-        restaurar_invariante();      // O(n²)
-        mas_influyente_rec(Q,K);        // llamdo recursivo
+        restaurar_invariante(E, Q, K);      // O(n²)
+        mas_influyente_rec(E, p, Q, K, max_sum, Q_max);        // llamdo recursivo
         //restaruar_2(Q,K)
         K = K_aux;                  // O(n)
         Q = Q_aux;                  // O(n)
-
     }
-
 }
-void mas_influyente(vector<int> &Q, vector<int> &K){
-    sortByInfluence(K);
-    
-    mas_influyente_rec(Q,K);
 
-    
-
+void mas_influyente(const vector<vector<bool>> &E, const vector<int> &p, vector<int> &Q, vector<int> &K, int &max_sum, vector<int> &Q_max){
+    sortByInfluence(K);    
+    mas_influyente_rec(E, p, Q, K, max_sum, Q_max);
 }
+
 int main(int argc, char* argv[]){
-
     // Q = {};
     // K = {1,2,3,4};
     // p = {1,4,3,8};
@@ -230,25 +207,25 @@ int main(int argc, char* argv[]){
     //      {0,0,1,0}};
 
     VEp sample = readInput(); // llamar con ./backtracking < sample.in
-
-    V = sample.V;
-    E = sample.E;
-    p = sample.p;
-
-    Q = {};
-    K = V; // copy vector
-
-
     
+    // Variables de entrada
+    vector<int> V = sample.V;
+    vector<vector<bool>> E = sample.E;
+    vector<int> p = sample.p;
+
+    // Variables de backtraking
+    vector<int> Q = {};
+    vector<int> K = V; // copy vector
+    int max_sum = 0;
+    vector<int> Q_max;
+
     //
-    mas_influyente(Q,K);
+    mas_influyente(E,p,Q,K,max_sum,Q_max);
 
     cout << max_sum << endl;
     
-    for(int e: Q_max){
-
+    for(int e: Q_max) {
         cout << e << " ";
-
     }
 
     cout << endl;
