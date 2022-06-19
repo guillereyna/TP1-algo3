@@ -154,10 +154,6 @@ int influencia(const vector<int >& Q, const vector<int> & infl){
     return acc;
 }
 
-bool poda2(vector<int>& K, const vector<int>& Q, const vector<int>& p, int max_sum){
-    return ((greedyMinPartitionK(K, p) + 
-            sumaInflVec(Q)) <= max_sum);
-}
 
 void mas_influyente_rec(vector<int> &Q, vector<int> &K, int &max_sum, vector<int> &Q_max){
     if(K.size() == 0){
@@ -170,9 +166,11 @@ void mas_influyente_rec(vector<int> &Q, vector<int> &K, int &max_sum, vector<int
     else{
         if(sumaInflVec(Q)+sumaInflVec(K) < max_sum) return;
 
-        if(poda2(K,Q,p,max_sum)){
+
+        if((greedyMinPartitionK(K, p) + 
+            sumaInflVec(Q)) <= max_sum){
              return;
-         }
+        }
 
         vector<int> K_aux = K;      // O(n)
         vector<int> Q_aux = Q;      // O(n)
@@ -227,6 +225,7 @@ int main(int argc, char* argv[]){
     mas_influyente(Q,K,max_sum,Q_max);
 
     cout << max_sum << endl;
+    cerr << max_sum << endl;
     
     for(int e: Q_max) {
         cout << e << " ";
