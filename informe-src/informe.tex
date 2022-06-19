@@ -132,10 +132,13 @@ MANNa9: & 0.80 & 0.93
 Finalmente, como muestra el experimento, ordenar a los actores de mayor a menor según influencia parece ser mas conveniente que de la otra manera. Pensamos que esto es así por que es poco probable tener una clique grande que no contenga ningún elemento con influencia grande y a la vez ser lo suficientemente grande como para ser la clique de mayor influencia. Por lo tanto si se ordenan los actores de mayor a menor influencia se encuentra las cliques mas grandes primero lo que hace mas eficiente la poda.
 
 \subsection{Operación de extensión}
-\emph{La operación de extensión define una función recursiva cuya descripción formal puede ser compleja. Sin definir formalmente esta función, explicar por qué la misma no tiene la propiedad de
-superposición de subproblemas.} \\
 
 Dados dos conjuntos $Q$ y $K$ de tamaño acotado tal que $Q \leq |r|$ y $K \leq |s|$, es decir $r+s = n$ vértices en el grafo:
+
+Es posible que en Q terminen entrando todos los elementos que hay en K, un ejempo donde ocurre esto es cuando todos los integrantes de la red social conforman una gran clique. Dicho esto, al tomar el siguiente vertice de K, el cual es seleccionado por el orden en el que se encuentran dados los vertices, puede ocurrir que ningun elemento se elimine de K y que esto ocurra para cada vertice que se tome. Entonces a priori la cantidad de subinstancias del problema podria ser exponencial (2^s).
+
+Por lo tanto, sin importar que haya instancias particulares del problema que si la cumplan, no es cierto que se cumple la propiedad de superposición de problemas, pues, tenemos que la cantidad de subproblemas es exponencial (en el caso general) y la cantidad de llamadas recursivas tambien es exponencial.
+
 \begin{itemize}
 \item Se puede elegir o no poner uno de los $r$ elementos en $Q$ y uno de los $s$ elementos en $K$. Luego la cantidad de subproblemas es $O(2^r \cdot 2^s)$
 \item En cada llamada recursiva se evalúan los casos en que al elemento que saco de $K$, lo agrego o no a $Q$. Luego la cantidad de llamadas recursivas es $O(2^s)$
