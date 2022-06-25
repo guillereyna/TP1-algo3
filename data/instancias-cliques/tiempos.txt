@@ -1,0 +1,5 @@
+Procesando brock200_1.clq
+Procesando brock200_2.clq
+Procesando brock200_3.clq
+Procesando brock200_4.clq
+Procesando brock400_2.clq
